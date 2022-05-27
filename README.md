@@ -5,5 +5,6 @@
 вёрстки с использованием технологий CSS Flex Box, Grid Layout и медиа-запросов. Файловая структура оформлена в соответствии с методологией БЭМ (Nested). Написаны и подключены скрипты для редактирования профиля пользователя.
 
 [Ссылка на сайт](https://kripns.github.io/mesto/)
+<p></p>
 [Ссылка на макет из Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1/)
 
