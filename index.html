@@ -8,7 +8,7 @@
 </head>
 <body class="page">
   <header class="header">
-    <img class="header__logo" src="./images/Header__logo.png" alt="логотип">
+    <img class="header__logo" src="./images/header-logo.svg" alt="логотип">
   </header>
   <main class="content">
     <section class="profile">
@@ -16,57 +16,53 @@
       <div class="profile__info">
         <div class="profile__name-card">
           <h1 class="profile__heading">Жак-Ив Кусто</h1>
-          <button class="edit-button">
-            <img class="edit-button__pic" src="./images/edit-button.png" alt="редактировать профиль">
-          </button>
+          <button class="edit-button" type="button"></button>
         </div>
         <p class="profile__subheading">Исследователь океана</p>
       </div>
-      <button class="add-card-button">
-        <img class="add-card-button__pic" src="./images/Add-Button.png" alt="добавить место">
-      </button>
+      <button class="add-card-button" type="button"></button>
     </section>
     <section class="places">
       <article class="place-card">
-        <img class="place-card__image" src="./images/karachaevsk.png" alt="Карачаевск">
+        <img class="place-card__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
         <div class="place-card__info">
           <h2 class="place-card__heading">Карачаевск</h2>
-          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+          <button class="place-card__like" type="button"></button>
         </div>
       </article>
       <article class="place-card">
-        <img class="place-card__image" src="./images/elbrus.png" alt="Эльбрус">
+        <img class="place-card__image" src="./images/elbrus.jpg" alt="Эльбрус">
         <div class="place-card__info">
           <h2 class="place-card__heading">Эльбрус</h2>
-          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+          <button class="place-card__like" type="button"></button>
         </div>
       </article>
       <article class="place-card">
-        <img class="place-card__image" src="./images/dombai.png" alt="Домбай">
+        <img class="place-card__image" src="./images/dombai.jpg" alt="Домбай">
         <div class="place-card__info">
           <h2 class="place-card__heading">Домбай</h2>
-          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+          <button class="place-card__like" type="button"></button>
         </div>
       </article>
       <article class="place-card">
-        <img class="place-card__image" src="./images/karachaevsk.png" alt="Карачаевск">
+        <img class="place-card__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
         <div class="place-card__info">
           <h2 class="place-card__heading">Карачаевск</h2>
-          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+          <button class="place-card__like" type="button"></button>
         </div>
       </article>
       <article class="place-card">
-        <img class="place-card__image" src="./images/elbrus.png" alt="Эльбрус">
+        <img class="place-card__image" src="./images/elbrus.jpg" alt="Эльбрус">
         <div class="place-card__info">
           <h2 class="place-card__heading">Эльбрус</h2>
-          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+          <button class="place-card__like" type="button"></button>
         </div>
       </article>
       <article class="place-card">
-        <img class="place-card__image" src="./images/dombai.png" alt="Домбай">
+        <img class="place-card__image" src="./images/dombai.jpg" alt="Домбай">
         <div class="place-card__info">
           <h2 class="place-card__heading">Домбай</h2>
-          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+          <button class="place-card__like" type="button"></button>
         </div>
       </article>
     </section>
@@ -76,11 +72,11 @@
   </footer>
   <div class="popup">
     <div class="popup__container">
-      <img class="popup__close-icon" src="./images/close-icon.png" alt="закрыть">
-      <h3 class="popup__heading">Редактировать профиль</h3>
-      <form class="popup__form">
-        <input class="popup__input popup__input_type_name" placeholder="Имя" type="text">
-        <input class="popup__input popup__input_type_job" placeholder="О себе" type="text">
+      <button class="popup__close-icon" type="button"></button>
+      <h2 class="popup__heading">Редактировать профиль</h2>
+      <form class="popup__form" name="edit-profile">
+        <input class="popup__input popup__input_type_name" name="user-name" placeholder="Имя" type="text">
+        <input class="popup__input popup__input_type_job" name="user-job" placeholder="О себе" type="text">
         <button class="popup__button" type="submit">Сохранить</button>
       </form>
     </div>

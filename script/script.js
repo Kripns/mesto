@@ -1,3 +1,4 @@
+
 // нажимаем на эдит буттон, открываем попап
 // заполняем вэлъю инпутов
 const editButton = document.querySelector('.edit-button');
@@ -7,18 +8,19 @@ const jobInput = document.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__heading');
 const profileJob = document.querySelector('.profile__subheading');
 
+const openPopup = () => popup.classList.add('popup_opened'); // фн открывает попап
 editButton.addEventListener('click', () => {
-  popup.classList.add('popup_opened');
+  openPopup();
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
 });
 
+
 // нажимаем на крестик, закрываем попап.
 const popupCloseIcon = document.querySelector('.popup__close-icon');
+const closePopup = () => popup.classList.remove('popup_opened'); //фн закрывает попап
 
-popupCloseIcon.addEventListener('click', () => {
-  popup.classList.remove('popup_opened');
-});
+popupCloseIcon.addEventListener('click', closePopup);
 
 
 // обработчик отправки формы
@@ -31,7 +33,7 @@ const formSubmitHandler = (event) => {
   event.preventDefault();
   profileName.textContent = `${nameInput.value}`;
   profileJob.textContent = `${jobInput.value}`;
-  popup.classList.remove('popup_opened');
+  closePopup();
 }
 
 // отслеживаем субмит

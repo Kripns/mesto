@@ -1,6 +1,13 @@
 .place-card__like {
+  width: 22px;
+  height: 19px;
   cursor: pointer;
   transition: all .3s;
+  padding: 0;
+  background: #fff;
+  background-image: url(../../../images/like.svg);
+  background-size: cover;
+  border: none;
 }
 
 .place-card__like:hover {

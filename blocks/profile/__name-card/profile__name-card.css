@@ -4,8 +4,9 @@
   gap: 18px;
 }
 
-@media screen and (max-width: 925px) {
+@media screen and (max-width: 768px) {
   .profile__name-card {
     gap: 10px;
+    padding-left: 27px;
   }
 }

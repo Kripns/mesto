@@ -2,15 +2,15 @@
   height: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
   color: #fff;
 }
 
 @media screen and (max-width: 768px) {
   .profile__info {
-    padding: 22.25px 19px 36px;
+    padding: 25.25px 0 31px;
     align-items: center;
     text-align: center;
-    gap: 14px;
+    gap: 8px;
   }
 }

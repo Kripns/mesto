@@ -3,13 +3,13 @@
   min-width: 320px;
   display: flex;
   align-items: center;
-  padding: 40px 0 51px;
+  padding: 37px 0 49px;
   box-sizing: border-box;
 }
 
 @media screen and (max-width: 925px) {
   .profile {
-    padding: 40px 19px 51px;
+    padding: 40px 19px 36px;
   }
 }
 
