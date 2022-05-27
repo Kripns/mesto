@@ -1,0 +1,12 @@
+.place-card__like {
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.place-card__like:hover {
+  opacity: .5;
+}
+
+place-card__like.active {
+  background: #000;
+}

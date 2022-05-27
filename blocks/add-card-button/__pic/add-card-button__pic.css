@@ -1,0 +1,9 @@
+.add-card-button__pic {
+ width: 22px;
+}
+
+@media screen and (max-width: 768px) {
+  .add-card-button__pic {
+    width: 16px;
+  }
+}

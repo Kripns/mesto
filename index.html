@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body class="page">
+  <header class="header">
+    <img class="header__logo" src="./images/Header__logo.png" alt="логотип">
+  </header>
+  <main class="content">
+    <section class="profile">
+      <img class="profile__avatar" src="./images/Avatar.png" alt="Ж.И. Кусто">
+      <div class="profile__info">
+        <div class="profile__name-card">
+          <h1 class="profile__heading">Жак-Ив Кусто</h1>
+          <button class="edit-button">
+            <img class="edit-button__pic" src="./images/edit-button.png" alt="редактировать профиль">
+          </button>
+        </div>
+        <p class="profile__subheading">Исследователь океана</p>
+      </div>
+      <button class="add-card-button">
+        <img class="add-card-button__pic" src="./images/add-Button.png" alt="добавить место">
+      </button>
+    </section>
+    <section class="places">
+      <article class="place-card">
+        <img class="place-card__image" src="./images/karachaevsk.png" alt="Карачаевск">
+        <div class="place-card__info">
+          <h2 class="place-card__heading">Карачаевск</h2>
+          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+        </div>
+      </article>
+      <article class="place-card">
+        <img class="place-card__image" src="./images/elbrus.png" alt="Эльбрус">
+        <div class="place-card__info">
+          <h2 class="place-card__heading">Эльбрус</h2>
+          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+        </div>
+      </article>
+      <article class="place-card">
+        <img class="place-card__image" src="./images/dombai.png" alt="Домбай">
+        <div class="place-card__info">
+          <h2 class="place-card__heading">Домбай</h2>
+          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+        </div>
+      </article>
+      <article class="place-card">
+        <img class="place-card__image" src="./images/karachaevsk.png" alt="Карачаевск">
+        <div class="place-card__info">
+          <h2 class="place-card__heading">Карачаевск</h2>
+          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+        </div>
+      </article>
+      <article class="place-card">
+        <img class="place-card__image" src="./images/elbrus.png" alt="Эльбрус">
+        <div class="place-card__info">
+          <h2 class="place-card__heading">Эльбрус</h2>
+          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+        </div>
+      </article>
+      <article class="place-card">
+        <img class="place-card__image" src="./images/dombai.png" alt="Домбай">
+        <div class="place-card__info">
+          <h2 class="place-card__heading">Домбай</h2>
+          <img class="place-card__like" src="./images/like.svg" alt="лайк">
+        </div>
+      </article>
+    </section>
+  </main>
+  <footer class="footer">
+    <p class="footer__text">© 2020 Mesto Russia</p>
+  </footer>
+  <div class="popup">
+    <div class="popup__container">
+      <img class="popup__close-icon" src="./images/close-icon.png" alt="закрыть">
+      <h3 class="popup__heading">Редактировать профиль</h3>
+      <form class="popup__form">
+        <input class="popup__input popup__input_type_name" placeholder="Имя" type="text">
+        <input class="popup__input popup__input_type_job" placeholder="О себе" type="text">
+        <button class="popup__button" type="submit">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <script src="./script/script.js"></script>
+</body>
+</html>

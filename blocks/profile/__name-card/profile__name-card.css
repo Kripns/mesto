@@ -1,0 +1,11 @@
+.profile__name-card {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+}
+
+@media screen and (max-width: 925px) {
+  .profile__name-card {
+    gap: 10px;
+  }
+}
