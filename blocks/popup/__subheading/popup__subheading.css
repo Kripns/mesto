@@ -1,5 +1,5 @@
 .popup__subheading {
-  max-width: 75vw;
+  max-width: 500px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -9,4 +9,10 @@
   color: #fff;
   margin: 0;
   padding-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .popup__subheading {
+    max-width: 240px;
+  }
 }
