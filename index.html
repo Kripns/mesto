@@ -23,7 +23,7 @@
       <button class="add-card-button" type="button"></button>
     </section>
     <section class="places">
-      <article class="place-card">
+      <!-- <article class="place-card">
         <img class="place-card__image" src="./images/karachaevsk.jpg" alt="Карачаевск">
         <div class="place-card__info">
           <h2 class="place-card__heading">Карачаевск</h2>
@@ -64,13 +64,13 @@
           <h2 class="place-card__heading">Домбай</h2>
           <button class="place-card__like" type="button"></button>
         </div>
-      </article>
+      </article> -->
     </section>
   </main>
   <footer class="footer">
     <p class="footer__text">© 2020 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_type_profile">
     <div class="popup__container">
       <button class="popup__close-icon" type="button"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
@@ -81,6 +81,26 @@
       </form>
     </div>
   </div>
+  <div class="popup popup_type_card-adding">
+    <div class="popup__container">
+      <button class="popup__close-icon" type="button"></button>
+      <h2 class="popup__heading">Новое место</h2>
+      <form class="popup__form" name="add-card">
+        <input class="popup__input popup__input_type_place-name" name="place-name" placeholder="Название" type="text">
+        <input class="popup__input popup__input_type_url" name="picture-link" placeholder="Ссылка на картинку" type="text">
+        <button class="popup__button" type="submit">Создать</button>
+      </form>
+    </div>
+  </div>
+  <template class="place-card-template">
+    <article class="place-card">
+      <img class="place-card__image" src="" alt="">
+      <div class="place-card__info">
+        <h2 class="place-card__heading"></h2>
+        <button class="place-card__like" type="button"></button>
+      </div>
+    </article>
+  </template>
   <script src="./script/script.js"></script>
 </body>
 </html>
