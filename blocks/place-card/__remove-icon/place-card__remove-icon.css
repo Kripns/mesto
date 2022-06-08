@@ -1,0 +1,18 @@
+.place-card__remove-icon {
+  width: 18px;
+  height: 19px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: url(../../../images/remove-icon.svg);
+  background-size: cover;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity .3s;
+}
+
+.place-card__remove-icon:hover {
+  opacity: .6;
+}
+
