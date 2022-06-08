@@ -1,6 +1,14 @@
 .place-card__image {
   min-width: 282px;
   width: 100%;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 10px 10px 0 0;
+}
+
+
+@supports not (aspect-ratio: 1) {
+  .place-card__image {
+    height: 282px;
+  }
 }

@@ -30,24 +30,22 @@ function profileFormSubmitHandler (event) {
 };
 
 
-document.getElementsByName('edit-profile')[0]           //находим форму изменения профайла
+document.getElementsByName('edit-profile-form')[0]      //находим форму изменения профайла
 .addEventListener('submit', profileFormSubmitHandler);  // отслеживаем субмит
 
 
 // Открываем попап добавления карточки
 const cardAddingPopup = document.querySelector('.popup_type_card-adding');
 
-document.querySelector('.add-card-button').addEventListener('click', () => {
-  openPopup(cardAddingPopup);
-});
+document.querySelector('.add-card-button')
+.addEventListener('click', () => openPopup(cardAddingPopup));
 
 //Закрываем попап на крестик
 cardAddingPopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(cardAddingPopup));
 
 
-
-const initialCards = [
+const defaultCards = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -73,6 +71,19 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+const placeCardTemplate = document.querySelector('.place-card-template').content;
+
+defaultCards.forEach((el) => renderDefaultCards(el));
+
+function renderDefaultCards (card) {
+  const placeCard = placeCardTemplate.querySelector('.place-card').cloneNode(true);
+  placeCard.querySelector('.place-card__heading').textContent = card.name;
+  placeCard.querySelector('.place-card__image').src = card.link;
+  placeCard.querySelector('.place-card__image').alt = card.name;
+
+  document.querySelector('.places').prepend(placeCard);
+};
 
 function openPopup (popupName) {
   popupName.classList.add('popup_opened')
