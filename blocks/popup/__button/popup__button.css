@@ -12,7 +12,7 @@
   padding: 0;
   margin-top: 47px;
   cursor: pointer;
-  transition: all .3s;
+  transition: opacity .3s;
 }
 
 .popup__button:hover {

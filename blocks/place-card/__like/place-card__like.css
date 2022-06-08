@@ -2,7 +2,7 @@
   width: 22px;
   height: 19px;
   cursor: pointer;
-  transition: all .3s;
+  transition: opacity .3s;
   padding: 0;
   background: #fff;
   background-image: url(../../../images/like.svg);
@@ -14,6 +14,3 @@
   opacity: .5;
 }
 
-place-card__like.active {
-  background: #000;
-}
