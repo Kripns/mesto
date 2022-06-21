@@ -99,30 +99,34 @@ function createCard (card) {
 
   placeCardImage.addEventListener('click', () => {    //отслеживаем клик по карточке
     fullsizeImage.src = card.link;                    //заполняем название и ссылку
-    fullsizeImage.alt = card.name;
+    fullsizeImage.alt = card.name;                    //заполняем текст под картинкой
 
-    //заполняем текст под картинкой
     imagePopup.querySelector('.popup__subheading').textContent = card.name;
     openPopup(imagePopup);        //открываем попап
   });
 
-  imagePopup.querySelector('.popup__close-icon')                   //закрываем на крестик
+  //закрываем на крестик
+  imagePopup.querySelector('.popup__close-icon')
   .addEventListener('click', () => closePopup(imagePopup));
 
-  placeCard.querySelector('.place-card__like')                     //реализуем нажатие лайков
+  //реализуем нажатие лайков
+  placeCard.querySelector('.place-card__like')
   .addEventListener('click', event => event.target.classList.toggle('place-card__like_active'));
 
-  placeCard.querySelector('.place-card__remove-icon')              //реализуем удаление карточек
+  //реализуем удаление карточек
+  placeCard.querySelector('.place-card__remove-icon')
   .addEventListener('click', event => event.target.closest('.place-card').remove());
 
   return placeCard;
 };
 
+//добавляем карточку в разметку
 function renderCard (card) {
-  placesSection.prepend(createCard(card)) //добавляем карточку в разметку
+  placesSection.prepend(createCard(card));
 };
 
-defaultCards.forEach((el) => renderCard(el));   // вставляем в разметку дефолтные карточки
+// вставляем в разметку дефолтные карточки
+defaultCards.forEach((el) => renderCard(el));
 
 
 document.querySelector('.edit-button').addEventListener('click', () => {
@@ -131,53 +135,24 @@ document.querySelector('.edit-button').addEventListener('click', () => {
   openPopup(profilePopup);                              // нажимаем на эдит буттон, открываем попап
 });
 
-
-
-
-function showErrorMessage (formElement, inputElement, errorMessage) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add('popup__input_type_error');
-  errorElement.classList.add('popup__input-error_type_visible');
-  errorElement.textContent = errorMessage;
-};
-
-function hideErrorMessage (formElement, inputElement) {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove('popup__input_type_error');
-  errorElement.classList.remove('popup__input-error_type_visible');
-  errorElement.textContent = '';
-};
-
-
-
-
-
-
-
-
-
-
-function enableValidation (properties) {
-
-};
-
-
-profilePopup.querySelector('.popup__close-icon')            // нажимаем на крестик, закрываем попап.
+// нажимаем на крестик, закрываем попап.
+profilePopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(profilePopup));
 
+// находим форму изменения профайла
+// отслеживаем субмит
+document.querySelector('.popup__form')
+.addEventListener('submit', handleProfileFormSubmit);
 
-document.querySelector('.popup__form')                  // находим форму изменения профайла
-.addEventListener('submit', handleProfileFormSubmit);  // отслеживаем субмит
-
-
-document.querySelector('.add-card-button')              // Открываем попап добавления карточки
+// Открываем попап добавления карточки
+document.querySelector('.add-card-button')
 .addEventListener('click', () => openPopup(cardAddingPopup));
 
-
-cardAddingPopup.querySelector('.popup__close-icon')     // Закрываем попап на крестик
+// Закрываем попап на крестик
+cardAddingPopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(cardAddingPopup));
 
-
-cardAddingPopup.querySelector('.popup__form')    // отслеживаем сабмит и закрываем попап
+ // отслеживаем сабмит и закрываем попап
+cardAddingPopup.querySelector('.popup__form')
 .addEventListener('submit', handleAddingCardFormSubmit);
 
