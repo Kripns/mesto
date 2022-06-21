@@ -51,20 +51,25 @@ const fullsizeImage = imagePopup.querySelector('.popup__fullsize-image');
 const placesSection = document.querySelector('.places');
 
 
-
+// фн открывает попап
 function openPopup (popupName) {
-  popupName.classList.add('popup_opened')     // фн открывает попап
-};                                            // принимают на вход попап
+  popupName.classList.add('popup_opened')
+};
 
-function closePopup (popupName) {             //фн закрывает попап
+//фн закрывает попап
+function closePopup (popupName) {
   popupName.classList.remove('popup_opened')
 };
 
-function handleProfileFormSubmit (event) {    // обработчик отправки формы создания профиля
-  event.preventDefault();                     // отменяем стандартную отправку
-  profileName.textContent = profileNameInput.value;  // заполняем инпуты
+// обработчик отправки формы создания профиля
+// отменяем стандартную отправку
+// заполняем инпуты
+// закрываем по нажатию на субмит
+function handleProfileFormSubmit (event) {
+  event.preventDefault();
+  profileName.textContent = profileNameInput.value;
   profileJob.textContent = profileJobInput.value;
-  closePopup(profilePopup);                   // закрываем по нажатию на субмит
+  closePopup(profilePopup);
 };
 
 function handleAddingCardFormSubmit (event) {   // обработчик отправки формы добавления карточек
@@ -72,7 +77,7 @@ function handleAddingCardFormSubmit (event) {   // обработчик отпр
 
   const newCard = {};                           // создаем объект с новой карточкой
   newCard.name = placeNameInput.value;          // вставляем значения
-  newCard.link = placeLinkInput.value;        // из инпутов
+  newCard.link = placeLinkInput.value;          // из инпутов
 
   placeNameInput.value = '';                    // очищаем
   placeLinkInput.value = '';                  // поля инпутов
@@ -125,6 +130,36 @@ document.querySelector('.edit-button').addEventListener('click', () => {
   profileJobInput.value = profileJob.textContent;              // заполняем вэлъю инпутов
   openPopup(profilePopup);                              // нажимаем на эдит буттон, открываем попап
 });
+
+
+
+
+function showErrorMessage (formElement, inputElement, errorMessage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add('popup__input_type_error');
+  errorElement.classList.add('popup__input-error_type_visible');
+  errorElement.textContent = errorMessage;
+};
+
+function hideErrorMessage (formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove('popup__input_type_error');
+  errorElement.classList.remove('popup__input-error_type_visible');
+  errorElement.textContent = '';
+};
+
+
+
+
+
+
+
+
+
+
+function enableValidation (properties) {
+
+};
 
 
 profilePopup.querySelector('.popup__close-icon')            // нажимаем на крестик, закрываем попап.
