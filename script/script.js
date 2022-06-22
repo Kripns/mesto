@@ -28,6 +28,7 @@ const defaultCards = [
   }
 ];
 
+
 // находим шаблон карточки
 const placeCardTemplate = document.querySelector('.place-card-template').content;
 
@@ -53,12 +54,31 @@ const placesSection = document.querySelector('.places');
 
 // фн открывает попап
 function openPopup (popupName) {
-  popupName.classList.add('popup_opened')
+  popupName.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscape)
+  document.addEventListener('click', closeByOverlay)
+  enableValidation(validationConfig);
 };
 
 //фн закрывает попап
 function closePopup (popupName) {
-  popupName.classList.remove('popup_opened')
+  popupName.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape);
+  document.removeEventListener('click', closeByOverlay)
+};
+
+//фн закрывает попап на эскейп
+function closeByEscape (evt) {
+  if(evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'));
+  };
+};
+
+//фн закрывает попап по клику на оверлэй
+function closeByOverlay(evt) {
+  if(evt.target.classList.contains('popup')) {
+    closePopup(document.querySelector('.popup_opened'));
+  };
 };
 
 // обработчик отправки формы создания профиля
@@ -66,45 +86,51 @@ function closePopup (popupName) {
 // заполняем инпуты
 // закрываем по нажатию на субмит
 function handleProfileFormSubmit (event) {
-  event.preventDefault();
+  handleFormSubmit(event);
   profileName.textContent = profileNameInput.value;
   profileJob.textContent = profileJobInput.value;
   closePopup(profilePopup);
 };
 
-function handleAddingCardFormSubmit (event) {   // обработчик отправки формы добавления карточек
-  event.preventDefault();                       // отменяем стандартную отправку
-
-  const newCard = {};                           // создаем объект с новой карточкой
-  newCard.name = placeNameInput.value;          // вставляем значения
-  newCard.link = placeLinkInput.value;          // из инпутов
-
-  placeNameInput.value = '';                    // очищаем
-  placeLinkInput.value = '';                  // поля инпутов
-
-  renderCard(newCard);                          // добавляем карточку в дом
-  closePopup(cardAddingPopup);                  // закрываем попап
+// обработчик отправки формы добавления карточек
+function handleAddingCardFormSubmit (event) {
+// отменяем стандартную отправку
+  handleFormSubmit(event);
+// создаем объект с новой карточкой
+// вставляем значения из инпутов
+  const newCard = {};
+  newCard.name = placeNameInput.value;
+  newCard.link = placeLinkInput.value;
+// очищаем поля инпутов
+  placeNameInput.value = '';
+  placeLinkInput.value = '';
+// добавляем карточку в дом
+  renderCard(newCard);
+// закрываем попап
+  closePopup(cardAddingPopup);
 };
 
 //фн добавляет карточки в дом (принимает объект в кач. аргумента)
 function createCard (card) {
-  //копируем содержимое темплейта
+//копируем содержимое темплейта
+//находим заголовок и картинку
   const placeCard = placeCardTemplate.querySelector('.place-card').cloneNode(true);
   const placeCardHeading = placeCard.querySelector('.place-card__heading');
   const placeCardImage = placeCard.querySelector('.place-card__image');
-
-  placeCardHeading.textContent = card.name;           //заполняем заголовок карточки
-  placeCardImage.src = card.link;                     //заполняем сорс и альт
+//заполняем заголовок карточки, срси и альт
+  placeCardHeading.textContent = card.name;
+  placeCardImage.src = card.link;
   placeCardImage.alt = card.name;
-
-  placeCardImage.addEventListener('click', () => {    //отслеживаем клик по карточке
-    fullsizeImage.src = card.link;                    //заполняем название и ссылку
-    fullsizeImage.alt = card.name;                    //заполняем текст под картинкой
-
+//отслеживаем клик по карточке
+  placeCardImage.addEventListener('click', () => {
+//заполняем ссылку и название
+    fullsizeImage.src = card.link;
+    fullsizeImage.alt = card.name;
+//заполняем текст под картинкой
     imagePopup.querySelector('.popup__subheading').textContent = card.name;
-    openPopup(imagePopup);        //открываем попап
+//открываем попап
+    openPopup(imagePopup);
   });
-
   //закрываем на крестик
   imagePopup.querySelector('.popup__close-icon')
   .addEventListener('click', () => closePopup(imagePopup));
@@ -128,31 +154,33 @@ function renderCard (card) {
 // вставляем в разметку дефолтные карточки
 defaultCards.forEach((el) => renderCard(el));
 
-
+//открываем попап редактирования профиля
+//по клинку на эдит бтн
+//заполняем вэлъю инпутов
 document.querySelector('.edit-button').addEventListener('click', () => {
-  profileNameInput.value = profileName.textContent;            // редактироввания профиля
-  profileJobInput.value = profileJob.textContent;              // заполняем вэлъю инпутов
-  openPopup(profilePopup);                              // нажимаем на эдит буттон, открываем попап
+  profileNameInput.value = profileName.textContent;
+  profileJobInput.value = profileJob.textContent;
+  openPopup(profilePopup);
 });
 
-// нажимаем на крестик, закрываем попап.
+//нажимаем на крестик, закрываем попап.
 profilePopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(profilePopup));
 
-// находим форму изменения профайла
-// отслеживаем субмит
+//находим форму изменения профайла
+//отслеживаем субмит
 document.querySelector('.popup__form')
 .addEventListener('submit', handleProfileFormSubmit);
 
-// Открываем попап добавления карточки
+//Открываем попап добавления карточки
 document.querySelector('.add-card-button')
 .addEventListener('click', () => openPopup(cardAddingPopup));
 
-// Закрываем попап на крестик
+//Закрываем попап на крестик
 cardAddingPopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(cardAddingPopup));
 
- // отслеживаем сабмит и закрываем попап
+//отслеживаем сабмит и закрываем попап
 cardAddingPopup.querySelector('.popup__form')
 .addEventListener('submit', handleAddingCardFormSubmit);
 
