@@ -17,35 +17,28 @@ function enableValidation(config) {
 
 //фн добавления обработчиков формам
 function setFormListener(form, config) {
-//отменяем стандартную отправку формы
-//отслеживаем инпут и переключаем состояние кнопки
-  form.addEventListener('submit', handleFormSubmit);
-  form.addEventListener('input', () => toggleButtonState(form, config));
 //получаем массив инпутов, отслеживаем валидность
 //и показываем/прячем ошибки
+  const submitButton = form.querySelector(config.submitButtonSelector);
   const inputs = Array.from(form.querySelectorAll(config.inputSelector));
   inputs.forEach(input => {
-    input.addEventListener('input',
-      () => handleInputValidation(input, form, config));
+    input.addEventListener('input', () => {
+        handleInputValidation(input, form, config)
+        toggleButtonState(submitButton, form, config)
+    });
   });
-  toggleButtonState(form, config);
+  toggleButtonState(submitButton, form, config);
 };
 
 //фн переключает состояние кнопки если форма валидна/или нет
-function toggleButtonState(form, config) {
-  const submitButton = form.querySelector(config.submitButtonSelector);
+function toggleButtonState(button, form, config) {
   if(!form.checkValidity()) {
-  submitButton.disabled = true;
-  submitButton.classList.add(config.inactiveButtonClass);
+  button.disabled = true;
+  button.classList.add(config.inactiveButtonClass);
   } else {
-    submitButton.disabled = false;
-    submitButton.classList.remove(config.inactiveButtonClass);
+    button.disabled = false;
+    button.classList.remove(config.inactiveButtonClass);
   }
-};
-
-//фн отменяет дефолтную отпраку формы
-function handleFormSubmit(event) {
-  event.preventDefault();
 };
 
 //фн проверяет валидность инпута и показывает/прячет ошибки

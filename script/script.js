@@ -55,16 +55,16 @@ const placesSection = document.querySelector('.places');
 // фн открывает попап
 function openPopup (popupName) {
   popupName.classList.add('popup_opened');
-  document.addEventListener('keydown', closeByEscape)
-  document.addEventListener('click', closeByOverlay)
-  enableValidation(validationConfig);
+  document.addEventListener('keydown', closeByEscape);
+  popupName.addEventListener('click', closeByOverlay);
+
 };
 
 //фн закрывает попап
 function closePopup (popupName) {
   popupName.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
-  document.removeEventListener('click', closeByOverlay)
+  popupName.removeEventListener('click', closeByOverlay);
 };
 
 //фн закрывает попап на эскейп
@@ -77,12 +77,16 @@ function closeByEscape (evt) {
 //фн закрывает попап по клику на оверлэй
 function closeByOverlay(evt) {
   if(evt.target.classList.contains('popup')) {
-    closePopup(document.querySelector('.popup_opened'));
+    closePopup(evt.target);
   };
 };
 
+//фн отменяет дефолтную отпраку формы
+function handleFormSubmit(event) {
+  event.preventDefault();
+};
+
 // обработчик отправки формы создания профиля
-// отменяем стандартную отправку
 // заполняем инпуты
 // закрываем по нажатию на субмит
 function handleProfileFormSubmit (event) {
@@ -94,7 +98,6 @@ function handleProfileFormSubmit (event) {
 
 // обработчик отправки формы добавления карточек
 function handleAddingCardFormSubmit (event) {
-// отменяем стандартную отправку
   handleFormSubmit(event);
 // создаем объект с новой карточкой
 // вставляем значения из инпутов
@@ -131,9 +134,6 @@ function createCard (card) {
 //открываем попап
     openPopup(imagePopup);
   });
-  //закрываем на крестик
-  imagePopup.querySelector('.popup__close-icon')
-  .addEventListener('click', () => closePopup(imagePopup));
 
   //реализуем нажатие лайков
   placeCard.querySelector('.place-card__like')
@@ -184,3 +184,6 @@ cardAddingPopup.querySelector('.popup__close-icon')
 cardAddingPopup.querySelector('.popup__form')
 .addEventListener('submit', handleAddingCardFormSubmit);
 
+ //закрываем с картинкой на крестик
+ imagePopup.querySelector('.popup__close-icon')
+ .addEventListener('click', () => closePopup(imagePopup));
