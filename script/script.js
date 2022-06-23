@@ -57,7 +57,6 @@ const placesSection = document.querySelector('.places');
 function openPopup (popupName) {
   const popupForm = popupName.querySelector('.popup__form');
   const popupButton = popupName.querySelector('.popup__button');
-  console.log(popupForm.checkValidity())
   popupName.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
   popupName.addEventListener('click', closeByOverlay);
@@ -66,13 +65,11 @@ function openPopup (popupName) {
 
 //фн закрывает попап
 function closePopup (popupName) {
-  const popupForm = popupName.querySelector('.popup__form');
-  const inputs = Array.from(popupForm.querySelectorAll('.popup__input'));
   popupName.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
   popupName.removeEventListener('click', closeByOverlay);
 //убираем ошибки
-  inputs.forEach(input => hideError(input, popupForm, validationConfig));
+  resetInputError (popupName);
 };
 
 //фн закрывает попап на эскейп

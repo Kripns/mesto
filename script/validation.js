@@ -66,4 +66,13 @@ function hideError(input, form, config) {
   errorElement.textContent = '';
 };
 
+//фн убирает ошибки, если в попапе есть форма
+function resetInputError (popupName) {
+  if(popupName.querySelector('.popup__form')) {
+    const popupForm = popupName.querySelector('.popup__form');
+    const inputs = Array.from(popupForm.querySelectorAll('.popup__input'));
+    inputs.forEach(input => hideError(input, popupForm, validationConfig));
+  };
+};
+
 enableValidation(validationConfig);
