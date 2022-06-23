@@ -55,21 +55,19 @@ const placesSection = document.querySelector('.places');
 
 // фн открывает попап
 function openPopup (popupName) {
-  const popupForm = popupName.querySelector('.popup__form');
-  const popupButton = popupName.querySelector('.popup__button');
   popupName.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
   popupName.addEventListener('click', closeByOverlay);
-  toggleButtonState(popupButton, popupForm, validationConfig);
+  //убираем ошибки, меняем кнопку
+  resetInputError (popupName);
 };
+
 
 //фн закрывает попап
 function closePopup (popupName) {
   popupName.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
   popupName.removeEventListener('click', closeByOverlay);
-//убираем ошибки
-  resetInputError (popupName);
 };
 
 //фн закрывает попап на эскейп

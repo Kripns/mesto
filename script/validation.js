@@ -1,4 +1,3 @@
-
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -70,8 +69,10 @@ function hideError(input, form, config) {
 function resetInputError (popupName) {
   if(popupName.querySelector('.popup__form')) {
     const popupForm = popupName.querySelector('.popup__form');
+    const popupButton = popupName.querySelector('.popup__button');
     const inputs = Array.from(popupForm.querySelectorAll('.popup__input'));
     inputs.forEach(input => hideError(input, popupForm, validationConfig));
+    toggleButtonState(popupButton, popupForm, validationConfig);
   };
 };
 
