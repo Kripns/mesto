@@ -41,6 +41,7 @@ const profileJob = document.querySelector('.profile__subheading');
 
 // находим попап добавления карточки и инпуты в нутри него
 const cardAddingPopup = document.querySelector('.popup_type_card-adding');
+const cardAddingForm = document.forms['add-card'];
 const placeNameInput = cardAddingPopup.querySelector('.popup__input_type_place-name');
 const placeLinkInput = cardAddingPopup.querySelector('.popup__input_type_url');
 
@@ -54,17 +55,24 @@ const placesSection = document.querySelector('.places');
 
 // фн открывает попап
 function openPopup (popupName) {
+  const popupForm = popupName.querySelector('.popup__form');
+  const popupButton = popupName.querySelector('.popup__button');
+  console.log(popupForm.checkValidity())
   popupName.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
   popupName.addEventListener('click', closeByOverlay);
-
+  toggleButtonState(popupButton, popupForm, validationConfig);
 };
 
 //фн закрывает попап
 function closePopup (popupName) {
+  const popupForm = popupName.querySelector('.popup__form');
+  const inputs = Array.from(popupForm.querySelectorAll('.popup__input'));
   popupName.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
   popupName.removeEventListener('click', closeByOverlay);
+//убираем ошибки
+  inputs.forEach(input => hideError(input, popupForm, validationConfig));
 };
 
 //фн закрывает попап на эскейп
@@ -105,8 +113,7 @@ function handleAddingCardFormSubmit (event) {
   newCard.name = placeNameInput.value;
   newCard.link = placeLinkInput.value;
 // очищаем поля инпутов
-  placeNameInput.value = '';
-  placeLinkInput.value = '';
+  cardAddingForm.reset();
 // добавляем карточку в дом
   renderCard(newCard);
 // закрываем попап
@@ -169,7 +176,7 @@ profilePopup.querySelector('.popup__close-icon')
 
 //находим форму изменения профайла
 //отслеживаем субмит
-document.querySelector('.popup__form')
+profilePopup.querySelector('.popup__form')
 .addEventListener('submit', handleProfileFormSubmit);
 
 //Открываем попап добавления карточки
