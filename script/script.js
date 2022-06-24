@@ -32,14 +32,15 @@ const defaultCards = [
 // находим шаблон карточки
 const placeCardTemplate = document.querySelector('.place-card-template').content;
 
-// находим попап редактрования профиля, инпуты в попапе и текст в профиле
+// находим попап редактрования профиля, форму, инпуты в попапе и текст в профиле
 const profilePopup = document.querySelector('.popup_type_profile');
+const profileForm = profilePopup.querySelector('.popup__form');
 const profileNameInput = document.querySelector('.popup__input_type_name');
 const profileJobInput = document.querySelector('.popup__input_type_job');
 const profileName = document.querySelector('.profile__heading');
 const profileJob = document.querySelector('.profile__subheading');
 
-// находим попап добавления карточки и инпуты в нутри него
+// находим попап добавления карточки, форму и инпуты в нутри него
 const cardAddingPopup = document.querySelector('.popup_type_card-adding');
 const cardAddingForm = document.forms['add-card'];
 const placeNameInput = cardAddingPopup.querySelector('.popup__input_type_place-name');
@@ -57,17 +58,14 @@ const placesSection = document.querySelector('.places');
 function openPopup (popupName) {
   popupName.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
-  popupName.addEventListener('click', closeByOverlay);
-  //убираем ошибки, меняем кнопку
-  resetInputError (popupName);
+  popupName.addEventListener('mousedown', closeByOverlay);
 };
-
 
 //фн закрывает попап
 function closePopup (popupName) {
   popupName.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
-  popupName.removeEventListener('click', closeByOverlay);
+  popupName.removeEventListener('mousedown', closeByOverlay);
 };
 
 //фн закрывает попап на эскейп
@@ -162,6 +160,8 @@ defaultCards.forEach((el) => renderCard(el));
 document.querySelector('.edit-button').addEventListener('click', () => {
   profileNameInput.value = profileName.textContent;
   profileJobInput.value = profileJob.textContent;
+//убираем ошибки, меняем кнопку
+  resetInputError (profileForm);
   openPopup(profilePopup);
 });
 
@@ -169,22 +169,22 @@ document.querySelector('.edit-button').addEventListener('click', () => {
 profilePopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(profilePopup));
 
-//находим форму изменения профайла
 //отслеживаем субмит
-profilePopup.querySelector('.popup__form')
-.addEventListener('submit', handleProfileFormSubmit);
+profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 //Открываем попап добавления карточки
 document.querySelector('.add-card-button')
-.addEventListener('click', () => openPopup(cardAddingPopup));
+.addEventListener('click', () => {
+  resetInputError (cardAddingForm);
+  openPopup(cardAddingPopup)
+});
 
 //Закрываем попап на крестик
 cardAddingPopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(cardAddingPopup));
 
 //отслеживаем сабмит и закрываем попап
-cardAddingPopup.querySelector('.popup__form')
-.addEventListener('submit', handleAddingCardFormSubmit);
+cardAddingForm.addEventListener('submit', handleAddingCardFormSubmit);
 
  //закрываем с картинкой на крестик
  imagePopup.querySelector('.popup__close-icon')

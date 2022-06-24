@@ -66,14 +66,11 @@ function hideError(input, form, config) {
 };
 
 //фн убирает ошибки, если в попапе есть форма
-function resetInputError (popupName) {
-  if(popupName.querySelector('.popup__form')) {
-    const popupForm = popupName.querySelector('.popup__form');
-    const popupButton = popupName.querySelector('.popup__button');
-    const inputs = Array.from(popupForm.querySelectorAll('.popup__input'));
-    inputs.forEach(input => hideError(input, popupForm, validationConfig));
-    toggleButtonState(popupButton, popupForm, validationConfig);
-  };
+function resetInputError (form) {
+    const popupButton = form.querySelector('.popup__button');
+    const inputs = Array.from(form.querySelectorAll('.popup__input'));
+    inputs.forEach(input => hideError(input, form, validationConfig));
+    toggleButtonState(popupButton, form, validationConfig);
 };
 
 enableValidation(validationConfig);
