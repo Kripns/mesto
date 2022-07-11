@@ -1,4 +1,5 @@
 
+import Card from "./Card.js";
 
 // Создаем массив с дефолтными карточками
 const defaultCards = [
@@ -89,7 +90,7 @@ function handleFormSubmit(event) {
 
 // обработчик отправки формы создания профиля
 // заполняем инпуты
-// закрываем по нажатию на субмит
+// закрываем по нажатию на сабмит
 function handleProfileFormSubmit (event) {
   handleFormSubmit(event);
   profileName.textContent = profileNameInput.value;
