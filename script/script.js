@@ -98,6 +98,12 @@ function handleProfileFormSubmit (event) {
   closePopup(profilePopup);
 };
 
+//добавляем карточку в разметку
+const renderCard = (card) => {
+  const cardElement = new Card(card, '.place-card-template');
+  placesSection.prepend(cardElement);
+};
+
 // обработчик отправки формы добавления карточек
 function handleAddingCardFormSubmit (event) {
   handleFormSubmit(event);
@@ -114,43 +120,40 @@ function handleAddingCardFormSubmit (event) {
   closePopup(cardAddingPopup);
 };
 
-//фн добавляет карточки в дом (принимает объект в кач. аргумента)
-function createCard (card) {
-//копируем содержимое темплейта
-//находим заголовок и картинку
-  const placeCard = placeCardTemplate.querySelector('.place-card').cloneNode(true);
-  const placeCardHeading = placeCard.querySelector('.place-card__heading');
-  const placeCardImage = placeCard.querySelector('.place-card__image');
-//заполняем заголовок карточки, срси и альт
-  placeCardHeading.textContent = card.name;
-  placeCardImage.src = card.link;
-  placeCardImage.alt = card.name;
-//отслеживаем клик по карточке
-  placeCardImage.addEventListener('click', () => {
-//заполняем ссылку и название
-    fullsizeImage.src = card.link;
-    fullsizeImage.alt = card.name;
-//заполняем текст под картинкой
-    imagePopup.querySelector('.popup__subheading').textContent = card.name;
-//открываем попап
-    openPopup(imagePopup);
-  });
+// //фн добавляет карточки в дом (принимает объект в кач. аргумента)
+// function createCard (card) {
+// //копируем содержимое темплейта
+// //находим заголовок и картинку
+//   const placeCard = placeCardTemplate.querySelector('.place-card').cloneNode(true);
+//   const placeCardHeading = placeCard.querySelector('.place-card__heading');
+//   const placeCardImage = placeCard.querySelector('.place-card__image');
+// //заполняем заголовок карточки, срси и альт
+//   placeCardHeading.textContent = card.name;
+//   placeCardImage.src = card.link;
+//   placeCardImage.alt = card.name;
+// //отслеживаем клик по карточке
+//   placeCardImage.addEventListener('click', () => {
+// //заполняем ссылку и название
+//     fullsizeImage.src = card.link;
+//     fullsizeImage.alt = card.name;
+// //заполняем текст под картинкой
+//     imagePopup.querySelector('.popup__subheading').textContent = card.name;
+// //открываем попап
+//     openPopup(imagePopup);
+//   });
 
-  //реализуем нажатие лайков
-  placeCard.querySelector('.place-card__like')
-  .addEventListener('click', event => event.target.classList.toggle('place-card__like_active'));
+//   //реализуем нажатие лайков
+//   placeCard.querySelector('.place-card__like')
+//   .addEventListener('click', event => event.target.classList.toggle('place-card__like_active'));
 
-  //реализуем удаление карточек
-  placeCard.querySelector('.place-card__remove-icon')
-  .addEventListener('click', event => event.target.closest('.place-card').remove());
+//   //реализуем удаление карточек
+//   placeCard.querySelector('.place-card__remove-icon')
+//   .addEventListener('click', event => event.target.closest('.place-card').remove());
 
-  return placeCard;
-};
+//   return placeCard;
+// };
 
-//добавляем карточку в разметку
-function renderCard (card) {
-  placesSection.prepend(createCard(card));
-};
+
 
 // вставляем в разметку дефолтные карточки
 defaultCards.forEach((el) => renderCard(el));
@@ -190,3 +193,5 @@ cardAddingForm.addEventListener('submit', handleAddingCardFormSubmit);
  //закрываем с картинкой на крестик
  imagePopup.querySelector('.popup__close-icon')
  .addEventListener('click', () => closePopup(imagePopup));
+
+ renderCard();
