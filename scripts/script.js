@@ -1,5 +1,6 @@
 
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 // Создаем массив с дефолтными карточками
 const defaultCards = [
@@ -28,7 +29,6 @@ const defaultCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
-
 
 // находим шаблон карточки
 const placeCardTemplate = document.querySelector('.place-card-template').content;
@@ -98,12 +98,6 @@ function handleProfileFormSubmit (event) {
   closePopup(profilePopup);
 };
 
-//добавляем карточку в разметку
-const renderCard = (card) => {
-  const cardElement = new Card(card, '.place-card-template');
-  placesSection.prepend(cardElement);
-};
-
 // обработчик отправки формы добавления карточек
 function handleAddingCardFormSubmit (event) {
   handleFormSubmit(event);
@@ -121,39 +115,16 @@ function handleAddingCardFormSubmit (event) {
 };
 
 // //фн добавляет карточки в дом (принимает объект в кач. аргумента)
-// function createCard (card) {
-// //копируем содержимое темплейта
-// //находим заголовок и картинку
-//   const placeCard = placeCardTemplate.querySelector('.place-card').cloneNode(true);
-//   const placeCardHeading = placeCard.querySelector('.place-card__heading');
-//   const placeCardImage = placeCard.querySelector('.place-card__image');
-// //заполняем заголовок карточки, срси и альт
-//   placeCardHeading.textContent = card.name;
-//   placeCardImage.src = card.link;
-//   placeCardImage.alt = card.name;
-// //отслеживаем клик по карточке
-//   placeCardImage.addEventListener('click', () => {
-// //заполняем ссылку и название
-//     fullsizeImage.src = card.link;
-//     fullsizeImage.alt = card.name;
-// //заполняем текст под картинкой
-//     imagePopup.querySelector('.popup__subheading').textContent = card.name;
-// //открываем попап
-//     openPopup(imagePopup);
-//   });
+function createCard (cardData) {
+  const card = new Card(cardData, imagePopup, openPopup, '.place-card-template');
+  const cardElement = card.generateCard();
+  return cardElement;
+};
 
-//   //реализуем нажатие лайков
-//   placeCard.querySelector('.place-card__like')
-//   .addEventListener('click', event => event.target.classList.toggle('place-card__like_active'));
-
-//   //реализуем удаление карточек
-//   placeCard.querySelector('.place-card__remove-icon')
-//   .addEventListener('click', event => event.target.closest('.place-card').remove());
-
-//   return placeCard;
-// };
-
-
+//добавляем карточку в разметку
+function renderCard(cardData) {
+  placesSection.prepend(createCard(cardData));
+};
 
 // вставляем в разметку дефолтные карточки
 defaultCards.forEach((el) => renderCard(el));
@@ -173,7 +144,7 @@ document.querySelector('.edit-button').addEventListener('click', () => {
 profilePopup.querySelector('.popup__close-icon')
 .addEventListener('click', () => closePopup(profilePopup));
 
-//отслеживаем субмит
+//отслеживаем сабмит
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
 //Открываем попап добавления карточки
@@ -193,5 +164,3 @@ cardAddingForm.addEventListener('submit', handleAddingCardFormSubmit);
  //закрываем с картинкой на крестик
  imagePopup.querySelector('.popup__close-icon')
  .addEventListener('click', () => closePopup(imagePopup));
-
- renderCard();

@@ -1,9 +1,10 @@
 
 export default class Card {
-  constructor(cardData, templateSelector){
+  constructor(cardData, imagePopup, openPopup, templateSelector){
     this._cardData = cardData;
     this._templateSelector = templateSelector;
-
+    this._imagePopup = imagePopup;
+    this._openPopup = openPopup;
   };
 
   _getTemplate() {
@@ -27,7 +28,7 @@ export default class Card {
     this._cardImage.src = this._cardData.link;
     this._cardImage.alt = this._cardData.name;
 
-    _setEventListeners();
+    this._setEventListeners();
 
     return this._element;
   };
@@ -40,17 +41,14 @@ export default class Card {
     this._removeIcon = this._element.querySelector('.place-card__remove-icon');
     this._removeIcon.addEventListener('click', () => this._element.remove());
 
-    this._cardImage.addEventListener('click', this._openImagePopup);
+    this._cardImage.addEventListener('click', () => this._handlePopupOpening());
   };
 
-  _openImagePopup() {
-    fullsizeImage.src = this._cardData.link;
-    fullsizeImage.alt = this._cardData.name;
-    imagePopup.querySelector('.popup__subheading').textContent = this._cardData.name;
-    imagePopup.classList.add('popup_opened');
+  _handlePopupOpening() {
+    this._fullsizeImage = this._imagePopup.querySelector('.popup__fullsize-image');
+    this._fullsizeImage.src = this._cardData.link;
+    this._fullsizeImage.alt = this._cardData.name;
+    this._imagePopup.querySelector('.popup__subheading').textContent = this._cardData.name;
+    this._openPopup(this._imagePopup);
   };
 };
-
-
-
-
