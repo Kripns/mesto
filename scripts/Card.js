@@ -1,10 +1,9 @@
 
 export default class Card {
-  constructor(cardData, imagePopup, openPopup, templateSelector){
+  constructor(cardData, templateSelector, openImagePopup){
     this._cardData = cardData;
     this._templateSelector = templateSelector;
-    this._imagePopup = imagePopup;
-    this._openPopup = openPopup;
+    this._openImagePopup = openImagePopup;
   };
 
 //Получааем шаблон карточки
@@ -37,26 +36,31 @@ export default class Card {
     return this._element;
   };
 
-//Создаем обработчики лайка,
+//Устанавливаем обработчики лайка,
 //корзинки и открытия попапа с картинкой
   _setEventListeners() {
+    this._setLikeListener();
+    this._setRemoveIconListener();
+    this._setCardImageListener();
+  };
+
+//Устанавливаем слушатель на кнопку лайка
+  _setLikeListener() {
     this._like = this._element.querySelector('.place-card__like');
     this._like.addEventListener('click', () => this._like
     .classList.toggle('place-card__like_active'));
-
-    this._removeIcon = this._element.querySelector('.place-card__remove-icon');
-    this._removeIcon.addEventListener('click', () => this._element.remove());
-
-    this._cardImage.addEventListener('click', () => this._handlePopupOpening());
   };
 
-//Содаем метод открытия попапа с картинкой
-//прописываем ссылку на картинку, альт и подзаголовок
-  _handlePopupOpening() {
-    this._fullsizeImage = this._imagePopup.querySelector('.popup__fullsize-image');
-    this._fullsizeImage.src = this._cardData.link;
-    this._fullsizeImage.alt = this._cardData.name;
-    this._imagePopup.querySelector('.popup__subheading').textContent = this._cardData.name;
-    this._openPopup(this._imagePopup);
+//Устанавливаем слушатель на корзинку
+  _setRemoveIconListener() {
+    this._removeIcon = this._element.querySelector('.place-card__remove-icon');
+    this._removeIcon.addEventListener('click', () => this._element.remove());
+  };
+
+//Устанавливаем слушатель на картинку в карточке
+  _setCardImageListener() {
+    this._cardImage.addEventListener('click', () => {
+      this._openImagePopup(this._cardData.link, this._cardData.name)
+    });
   };
 };

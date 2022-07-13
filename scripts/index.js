@@ -53,6 +53,8 @@ const cardAddingFormValidator = new FormValidator(validationConfig, cardAddingFo
 
 //Элементы попапа с картинкой
 const imagePopup = document.querySelector('.popup_type_image');
+const popupImage = imagePopup.querySelector('.popup__fullsize-image');
+const popupImageCaption = imagePopup.querySelector('.popup__subheading');
 
 //Секция, куда будем вставлять карточки
 const placesSection = document.querySelector('.places');
@@ -66,21 +68,28 @@ cardAddingFormValidator.enableValidation();
 //ФУНКЦИИ
 
 //Фн открывает попап
-function openPopup (popupName) {
+function openPopup(popupName) {
   popupName.classList.add('popup_opened');
   document.addEventListener('keydown', closeByEscape);
   popupName.addEventListener('mousedown', closeByOverlay);
 };
 
+function openImagePopup(link, name) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupImageCaption.textContent = name;
+  openPopup(imagePopup);
+};
+
 //Фн закрывает попап
-function closePopup (popupName) {
+function closePopup(popupName) {
   popupName.classList.remove('popup_opened');
   document.removeEventListener('keydown', closeByEscape);
   popupName.removeEventListener('mousedown', closeByOverlay);
 };
 
 //Фн закрывает попап на эскейп
-function closeByEscape (evt) {
+function closeByEscape(evt) {
   if(evt.key === 'Escape') {
     closePopup(document.querySelector('.popup_opened'));
   };
@@ -101,7 +110,7 @@ function handleFormSubmit(event) {
 //Фн обработчик отправки формы создания профиля
 //заполняем инпуты
 //закрываем по нажатию на сабмит
-function handleProfileFormSubmit (event) {
+function handleProfileFormSubmit(event) {
   handleFormSubmit(event);
   profileName.textContent = profileNameInput.value;
   profileJob.textContent = profileJobInput.value;
@@ -114,7 +123,7 @@ function handleProfileFormSubmit (event) {
 //очищаем поля инпутов
 //добавляем карточку в дом
 //закрываем попап
-function handleAddingCardFormSubmit (event) {
+function handleAddingCardFormSubmit(event) {
   handleFormSubmit(event);
   const newCard = {};
   newCard.name = placeNameInput.value;
@@ -126,8 +135,8 @@ function handleAddingCardFormSubmit (event) {
 
 //Фн создает экземпляр класса Кард
 //заполняем данными и возвращаем новую карточку
-function createCard (cardData) {
-  const card = new Card(cardData, imagePopup, openPopup, '.place-card-template');
+function createCard(cardData) {
+  const card = new Card(cardData,'.place-card-template', openImagePopup);
   const cardElement = card.generateCard();
   return cardElement;
 };

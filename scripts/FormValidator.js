@@ -2,7 +2,6 @@ export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
     this._formElement = formElement;
-    this._forms = Array.from(document.querySelectorAll(this._config.formSelector));
     this._submitButton = this._formElement.querySelector(this._config.submitButtonSelector);
     this._inputs = Array.from(this._formElement.querySelectorAll(this._config.inputSelector));
   };
@@ -10,7 +9,7 @@ export default class FormValidator {
 //Включение валидации
 //вешаем обработчики инпутов на каждую форму
   enableValidation() {
-    this._forms.forEach(form => this._setFormListener(form));
+    this._setFormListener();
   };
 
 //Обработчик формы
