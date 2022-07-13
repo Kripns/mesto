@@ -2,25 +2,33 @@ export default class FormValidator {
   constructor(config, formElement) {
     this._config = config;
     this._formElement = formElement;
-  };
-
-  enableValidation() {
     this._forms = Array.from(document.querySelectorAll(this._config.formSelector));
-    this._forms.forEach(form => this._setFormListener(form, this._config));
-  };
-
-  _setFormListener() {
     this._submitButton = this._formElement.querySelector(this._config.submitButtonSelector);
     this._inputs = Array.from(this._formElement.querySelectorAll(this._config.inputSelector));
-    this._inputs.forEach(input => {
-      input.addEventListener('input', () => {
-        this._handleInputValidation(input, this._formElement, this._config)
-        this._toggleButtonState(this._submitButton, this._formElement, this._config)
-      });
-    });
-    this._toggleButtonState(this._submitButton, this._formElement, this._config);
   };
 
+//Включение валидации
+//вешаем обработчики инпутов на каждую форму
+  enableValidation() {
+    this._forms.forEach(form => this._setFormListener(form));
+  };
+
+//Обработчик формы
+//отслеживаем валидность инпутов
+//меняем состояние кнопки
+  _setFormListener() {
+    this._inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        this._handleInputValidation(input)
+        this._toggleButtonState()
+      });
+    });
+    this._toggleButtonState();
+  };
+
+//Переключение состояния кнопки
+//проверяем валидность формы
+//переключаем состояние кнопки
   _toggleButtonState() {
     if(!this._formElement.checkValidity()) {
       this._submitButton.disabled = true;
@@ -32,14 +40,37 @@ export default class FormValidator {
       }
   };
 
-  _handleInputValidation() {
+//Проверяем валидность инпута,
+//покаываем/прячем ошибки
+  _handleInputValidation(input) {
     if (!input.validity.valid) {
-      showError(input, this._formElement, this._config);
+      this._showError(input);
     } else {
-      hideError(input, this._formElement, this._config);
+      this._hideError(input);
     }
   };
 
+//Добавляем класс с ошибкой инпуту и спану
+//добавляем в спан текст ошибки
+  _showError(input) {
+    this._errorElement = this._formElement.querySelector(`.${input.id}-error`);
+    this._errorElement.classList.add(this._config.errorClass);
+    input.classList.add(this._config.inputErrorClass);
+    this._errorElement.textContent = input.validationMessage;
+  };
 
+//Удаляем класс с ошибкой у инпута и спана
+//очищаем спан
+  _hideError(input) {
+    this._errorElement = this._formElement.querySelector(`.${input.id}-error`);
+    this._errorElement.classList.remove(this._config.errorClass);
+    input.classList.remove(this._config.inputErrorClass);
+    this._errorElement.textContent = '';
+  };
 
-}
+//Сбрасываем ошибки при открытии попапов
+  resetInputError() {
+    this._inputs.forEach(input => this._hideError(input));
+    this._toggleButtonState();
+  };
+};

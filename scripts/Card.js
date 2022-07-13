@@ -7,6 +7,7 @@ export default class Card {
     this._openPopup = openPopup;
   };
 
+//Получааем шаблон карточки
   _getTemplate() {
     const cardElement = document
     .querySelector(this._templateSelector)
@@ -17,6 +18,9 @@ export default class Card {
     return cardElement;
   };
 
+//Содаем готовую карточку
+//заполняем все элементы данными
+//добаляем обработчики
   generateCard() {
     this._element = this._getTemplate();
     this._cardHeading = this._element
@@ -33,6 +37,8 @@ export default class Card {
     return this._element;
   };
 
+//Создаем обработчики лайка,
+//корзинки и открытия попапа с картинкой
   _setEventListeners() {
     this._like = this._element.querySelector('.place-card__like');
     this._like.addEventListener('click', () => this._like
@@ -44,6 +50,8 @@ export default class Card {
     this._cardImage.addEventListener('click', () => this._handlePopupOpening());
   };
 
+//Содаем метод открытия попапа с картинкой
+//прописываем ссылку на картинку, альт и подзаголовок
   _handlePopupOpening() {
     this._fullsizeImage = this._imagePopup.querySelector('.popup__fullsize-image');
     this._fullsizeImage.src = this._cardData.link;
