@@ -58,5 +58,6 @@ export default class Card {
 //Удаляем карточку
   _removeCard() {
     this._element.remove();
+    this._element = null;
   };
 };
