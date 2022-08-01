@@ -12,24 +12,24 @@ export default class PopupWithForm extends Popup {
     this._inputValues = {};
 
     this._inputs.forEach(input => {
-      this._inputValues.value = input.value;
+      this._inputValues[input.name] = input.value;
     })
-// нужен при сабмите, чтоб както перенести данные из формы на страницу
-// пока хз как
+
     return this._inputValues;
   }
 
 
   setEventListeners() {
-    this._form.addEventListener('submit',
-    evt => this.formSubmitHandler(evt));
+    this._form.addEventListener('submit', evt => {
+      evt.preventDefault();
+      this.formSubmitHandler(this._getInputValues());
+    });
 
     super.setEventListeners();
   }
 
   close() {
     this._form.reset();
-
     super.close();
   }
 }
