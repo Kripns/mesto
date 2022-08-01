@@ -1,9 +1,9 @@
 
 export default class Card {
-  constructor(cardData, templateSelector, openImagePopup){
+  constructor(cardData, templateSelector, handleCardClick){
     this._cardData = cardData;
     this._templateSelector = templateSelector;
-    this._openImagePopup = openImagePopup;
+    this._handleCardClick = handleCardClick;
   };
 
 //Получааем шаблон карточки
@@ -46,7 +46,7 @@ export default class Card {
     this._removeIcon.addEventListener('click', () => this._removeCard());
 
     this._cardImage.addEventListener('click', () => {
-      this._openImagePopup(this._cardData.link, this._cardData.name)
+      this._handleCardClick(this._cardData.link, this._cardData.name)
     });
   };
 
