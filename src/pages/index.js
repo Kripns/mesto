@@ -1,59 +1,57 @@
 //ИМПОРТЫ
 import {
   defaultCards,
-  // profilePopup,
+  cardAddingForm,
   profileForm,
   profileNameInput,
-  profileJobInput,
-  profileName,
-  profileJob,
-  // cardAddingPopup,
-  cardAddingForm,
-  placeNameInput,
-  placeLinkInput,
-  // imagePopup,
-  popupImage,
-  popupImageCaption,
-  placesSection
+  profileJobInput
 } from '../utils/constants.js';
 
-import Card from "../components/Card.js";
 import validationConfig from "../utils/validationConfig.js";
+import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import Section from '../components/Section.js';
-import PopupWithForm from '../components/PopupWithForm.js';
 import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
+
+//Экземпляры классов
 const profileFormValidator = new FormValidator(validationConfig, profileForm);
 const cardAddingFormValidator = new FormValidator(validationConfig, cardAddingForm);
 
 const cardList = new Section({
   items: defaultCards,
-  renderer: cardData => {
-    cardList.addItem(createCard(cardData.link, cardData.name))
-  }
-}, '.places');
+  renderer:
+  cardData => cardList.addItem(createCard(cardData.link, cardData.name))
+  }, '.places');
 
-const imagePopup = new PopupWithImage({ popupSelector: '.popup_type_image' });
-imagePopup.setEventListeners();
-
-const profilePopup = new PopupWithForm({
-  popupSelector: '.popup_type_profile',
-  formSubmitHandler: evt => submitProfileForm(evt)
+const imagePopup = new PopupWithImage({
+  popupSelector: '.popup_type_image'
 });
 
-profilePopup.setEventListeners();
+const profilePopup = new PopupWithForm({
+ popupSelector: '.popup_type_profile',
+  formSubmitHandler: submitProfileForm
+});
 
 const cardAddingPopup = new PopupWithForm({
   popupSelector: '.popup_type_card-adding',
   formSubmitHandler: submitCardAddingForm
 });
 
-cardAddingPopup.setEventListeners();
-
+const userInfo = new UserInfo({
+  userNameSelector: '.profile__heading',
+  userJobSelector: '.profile__subheading'
+});
 
 
 cardList.renderItems();
+
+imagePopup.setEventListeners();
+profilePopup.setEventListeners();
+cardAddingPopup.setEventListeners();
+
 
 //Включаем валидацию форм
 profileFormValidator.enableValidation();
@@ -86,21 +84,20 @@ function submitCardAddingForm(inputValues) {
 //Фн обработчик отправки формы создания профиля
 //заполняем инпуты
 //закрываем по нажатию на сабмит
-function submitProfileForm(inputValue) {
-  profileName.textContent = profileNameInput.value;
-  profileJob.textContent = profileJobInput.value;
+function submitProfileForm(inputValues) {
+  userInfo.setUserInfo({
+    name: inputValues['user-name'],
+    job: inputValues['user-job']
+  })
   profilePopup.close();
 };
 
 //ОБРАБОТЧИКИ
 
-//открываем попап редактирования профиля
-//по клинку на эдит бтн
-//заполняем вэлъю инпутов
-//убираем ошибки, меняем кнопку
-document.querySelector('.edit-button').addEventListener('click', () => {
-  profileNameInput.value = profileName.textContent;
-  profileJobInput.value = profileJob.textContent;
+document.querySelector('.edit-button')
+.addEventListener('click', () => {
+  profileNameInput.value = userInfo.getUserInfo().name;
+  profileJobInput.value = userInfo.getUserInfo().job;
   profileFormValidator.resetInputError();
   profilePopup.open();
 });

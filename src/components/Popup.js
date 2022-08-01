@@ -9,6 +9,7 @@ export default class Popup {
   open() {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscapeClose);
+    this._popup.addEventListener('mousedown', evt => this._handleClickByOverlay(evt));
 
   };
 
@@ -19,7 +20,6 @@ export default class Popup {
 
   setEventListeners() {
     this._closeIcon.addEventListener('click', () => this.close());
-    this._popup.addEventListener('mousedown', evt => this._handleClickByOverlay(evt));
   };
 
   _handleEscapeClose(evt) {
