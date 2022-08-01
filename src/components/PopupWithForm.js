@@ -8,15 +8,14 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.popup__form')
   }
 
-  getInputValues() {
+  _getInputValues() {
     this._inputValues = {};
 
     this._inputs.forEach(input => {
       this._inputValues.value = input.value;
     })
-
-    console.log(this._inputValues);
-
+// нужен при сабмите, чтоб както перенести данные из формы на страницу
+// пока хз как
     return this._inputValues;
   }
 

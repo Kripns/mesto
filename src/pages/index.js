@@ -48,7 +48,7 @@ cardAddingFormValidator.enableValidation();
 // };
 
 function handleCardClick({ link: link, name: name }) {
-  imagePopup.open({ link: link, name: name});
+  imagePopup.open({ link: link, name: name });
 };
 
 // //Фн закрывает попап
@@ -85,13 +85,20 @@ function handleCardClick({ link: link, name: name }) {
 const defaultCardList = new Section({
   items: defaultCards,
   renderer: (cardData) => {
-    const card = new Card(cardData,'.place-card-template', handleCardClick);
-    const cardElement = card.generateCard();
-    defaultCardList.addItem(cardElement)
+    defaultCardList.addItem(createCard(cardData.link, cardData.name))
   }
 }, '.places');
 
+defaultCardList.renderItems();
 
+
+function createCard(link, name) {
+  const card = new Card(link, name, '.place-card-template', () => {
+    handleCardClick({ link: link, name: name });
+  })
+  const cardElement = card.generateCard();
+  return cardElement;
+}
 
 //ОБРАБОТЧИКИ
 
@@ -170,4 +177,4 @@ document.querySelector('.add-card-button')
 //  .addEventListener('click', () => closePopup(imagePopup));
 
 
- defaultCardList.renderItems();
+
