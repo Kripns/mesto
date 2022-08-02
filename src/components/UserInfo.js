@@ -6,6 +6,7 @@ export default class UserInfo{
     this._job = document.querySelector(this._userJobSelector);
   }
 
+//Метод возвращает обьект с данными пользователя со страницы
   getUserInfo() {
     this._userData = {};
     this._userData.name = this._name.textContent;
@@ -14,6 +15,7 @@ export default class UserInfo{
     return this._userData;
   }
 
+//Метод вставляет данные из инпутов в профиль пользователя
   setUserInfo({ name, job }) {
     this._name.textContent = name;
     this._job.textContent = job;

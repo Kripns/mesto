@@ -8,6 +8,7 @@ export default class PopupWithForm extends Popup {
     this._form = this._popup.querySelector('.popup__form');
   }
 
+//Метод возвращает объект с данными из инпутов
   _getInputValues() {
     this._inputValues = {};
 
@@ -18,6 +19,7 @@ export default class PopupWithForm extends Popup {
     return this._inputValues;
   }
 
+//Перезаписываем метод, добавляем обработчик сабмита формам
   setEventListeners() {
     this._form.addEventListener('submit', evt => {
       evt.preventDefault();
@@ -27,6 +29,7 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
   }
 
+//Добавляем в метод сброс формы перед закрытием
   close() {
     this._form.reset();
     super.close();

@@ -46,20 +46,9 @@ const userInfo = new UserInfo({
 });
 
 
-cardList.renderItems();
-
-imagePopup.setEventListeners();
-profilePopup.setEventListeners();
-cardAddingPopup.setEventListeners();
-
-
-//Включаем валидацию форм
-profileFormValidator.enableValidation();
-cardAddingFormValidator.enableValidation();
-
-
 //ФУНКЦИИ
 
+//Фн создания карточки
 function createCard(link, name) {
   const card = new Card(link, name, '.place-card-template', () => {
     handleCardClick({ link: link, name: name });
@@ -68,10 +57,12 @@ function createCard(link, name) {
   return cardElement;
 };
 
+//Фн открытия попапа с картинкой
 function handleCardClick({ link: link, name: name }) {
   imagePopup.open({ link: link, name: name });
 };
 
+//Фн сабмит формы создания карточки
 function submitCardAddingForm(inputValues) {
   const newCard = {};
   newCard.name = inputValues['place-name'];
@@ -80,10 +71,7 @@ function submitCardAddingForm(inputValues) {
   cardAddingPopup.close();
 };
 
-
-//Фн обработчик отправки формы создания профиля
-//заполняем инпуты
-//закрываем по нажатию на сабмит
+//Фн сабмит формы редактирования профиля
 function submitProfileForm(inputValues) {
   userInfo.setUserInfo({
     name: inputValues['user-name'],
@@ -91,6 +79,19 @@ function submitProfileForm(inputValues) {
   })
   profilePopup.close();
 };
+
+//Рендерим дефолтные карточки
+cardList.renderItems();
+
+//Слушатели попапов
+imagePopup.setEventListeners();
+profilePopup.setEventListeners();
+cardAddingPopup.setEventListeners();
+
+//Включаем валидацию форм
+profileFormValidator.enableValidation();
+cardAddingFormValidator.enableValidation();
+
 
 //ОБРАБОТЧИКИ
 
@@ -102,12 +103,8 @@ document.querySelector('.edit-button')
   profilePopup.open();
 });
 
-//Открываем попап добавления карточки
-//сбрасываем ошибки с формы
 document.querySelector('.add-card-button')
 .addEventListener('click', () => {
   cardAddingFormValidator.resetInputError();
   cardAddingPopup.open();
 });
-
-
