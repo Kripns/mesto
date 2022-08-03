@@ -1,4 +1,6 @@
 //ИМПОРТЫ
+import './index.css';
+
 import {
   defaultCards,
   cardAddingForm,
