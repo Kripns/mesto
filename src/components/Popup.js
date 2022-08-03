@@ -6,22 +6,22 @@ export default class Popup {
     this._handleEscapeClose = this._handleEscapeClose.bind(this);
   };
 
-//Вешаем обработчики на эскейп и клик по оверлэю при открытии попапа
+//Вешаем обработчики на эскейп при открытии попапа
   open() {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscapeClose);
-    this._popup.addEventListener('mousedown', evt => this._handleClickByOverlay(evt));
   };
 
-//Удаляем слушатель эскейпа при закрытиии попапа
+  //Удаляем слушатель эскейпа при закрытиии попапа
   close() {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscapeClose);
   };
 
-//Добавляем слушатель на крестик
+  //Добавляем слушатель на крестик и клик по оверлэю
   setEventListeners() {
     this._closeIcon.addEventListener('click', () => this.close());
+    this._popup.addEventListener('mousedown', evt => this._handleClickByOverlay(evt));
   };
 
 //Создаем метод закрытия попапа на эскейп
