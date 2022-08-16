@@ -16,8 +16,8 @@ export default class UserInfo{
   }
 
 //Метод вставляет данные из инпутов в профиль пользователя
-  setUserInfo({ name, job }) {
+  setUserInfo({ name, about }) {
     this._name.textContent = name;
-    this._job.textContent = job;
+    this._job.textContent = about;
   }
 }

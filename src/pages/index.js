@@ -2,7 +2,6 @@
 import './index.css';
 
 import {
-  defaultCards,
   cardAddingForm,
   profileForm,
   profileNameInput,
@@ -16,17 +15,30 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
+import apiConfig from '../utils/apiConfig.js';
 
 
 //Экземпляры классов
 const profileFormValidator = new FormValidator(validationConfig, profileForm);
 const cardAddingFormValidator = new FormValidator(validationConfig, cardAddingForm);
 
-const cardList = new Section({
-  items: defaultCards,
-  renderer:
-  cardData => cardList.addItem(createCard(cardData.link, cardData.name))
-  }, '.places');
+const api = new Api(apiConfig);
+
+api.getDefaultCards().then(data => {
+  const cardList = new Section({
+    items: data,
+    renderer:
+    cardData => cardList.addItem(createCard(cardData.link, cardData.name))
+    }, '.places');
+
+    cardList.renderItems();
+}).catch(err => console.log(err))
+
+api.getUserInfo().then(data => {
+  userInfo.setUserInfo(data);
+})
+
 
 const imagePopup = new PopupWithImage({
   popupSelector: '.popup_type_image'
@@ -47,6 +59,8 @@ const userInfo = new UserInfo({
   userJobSelector: '.profile__subheading'
 });
 
+
+api.getUserInfo().then(data => console.log(data))
 
 //ФУНКЦИИ
 
@@ -83,7 +97,7 @@ function submitProfileForm(inputValues) {
 };
 
 //Рендерим дефолтные карточки
-cardList.renderItems();
+// cardList.renderItems();
 
 //Слушатели попапов
 imagePopup.setEventListeners();
@@ -110,3 +124,6 @@ document.querySelector('.add-card-button')
   cardAddingFormValidator.resetInputError();
   cardAddingPopup.open();
 });
+
+
+
