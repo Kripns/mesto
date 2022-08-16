@@ -15,7 +15,21 @@ class Api {
 
   }
 
-  getUserInfo() {
+  editProfile(data) {
+    // debugger;
+    return fetch(`${this._url}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then(res => {
+        if(res.ok) {return res.json()}
+        return Promise.reject(`Ошибка: ${res.status}`)
+      })
+  }
+
+
+  getUser() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers
     })
@@ -24,6 +38,8 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`)
       })
   }
+
+
 
 }
 

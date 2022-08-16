@@ -33,11 +33,11 @@ api.getDefaultCards().then(data => {
     }, '.places');
 
     cardList.renderItems();
-}).catch(err => console.log(err))
+}).catch(err => console.log(err));
 
-api.getUserInfo().then(data => {
+api.getUser().then(data => {
   userInfo.setUserInfo(data);
-})
+}).catch(err => console.log(err));
 
 
 const imagePopup = new PopupWithImage({
@@ -60,7 +60,7 @@ const userInfo = new UserInfo({
 });
 
 
-api.getUserInfo().then(data => console.log(data))
+// api.getUserInfo().then(data => console.log(data))
 
 //ФУНКЦИИ
 
@@ -88,13 +88,19 @@ function submitCardAddingForm(inputValues) {
 };
 
 //Фн сабмит формы редактирования профиля
-function submitProfileForm(inputValues) {
-  userInfo.setUserInfo({
-    name: inputValues['user-name'],
-    job: inputValues['user-job']
-  })
+ function submitProfileForm(inputValues) {
+  api.editProfile(inputValues)
+  .then(data => {
+    userInfo.setUserInfo({
+      name: data.name,
+      about: data.about
+    })
+  }).catch(err => console.log(err))
+
   profilePopup.close();
 };
+
+
 
 //Рендерим дефолтные карточки
 // cardList.renderItems();

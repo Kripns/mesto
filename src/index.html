@@ -14,10 +14,10 @@
       <img class="profile__avatar" src="<%=require('./images/Avatar.png')%>" alt="Ж.И. Кусто">
       <div class="profile__info">
         <div class="profile__name-card">
-          <h1 class="profile__heading">Жак-Ив Кусто</h1>
+          <h1 class="profile__heading"></h1>
           <button class="edit-button" type="button"></button>
         </div>
-        <p class="profile__subheading">Исследователь океана</p>
+        <p class="profile__subheading"></p>
       </div>
       <button class="add-card-button" type="button"></button>
     </section>
@@ -34,7 +34,7 @@
       <h2 class="popup__heading">Редактировать профиль</h2>
       <form class="popup__form" name="edit-profile" novalidate>
         <input class="popup__input popup__input_type_name"
-          name="user-name"
+          name="name"
           id="user-name-input"
           type="text"
           placeholder="Имя"
@@ -43,7 +43,7 @@
           required>
         <span class="popup__error user-name-input-error"></span>
         <input class="popup__input popup__input_type_job"
-          name="user-job"
+          name="about"
           id="user-job-input"
           type="text"
           placeholder="О себе"
