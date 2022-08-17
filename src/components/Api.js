@@ -39,7 +39,17 @@ class Api {
       })
   }
 
-
+  saveCard(data) {
+    return fetch(`${this._url}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data)
+    })
+      .then(res => {
+        if(res.ok) {return res.json()}
+        return Promise.reject(`Ошибка: ${res.status}`)
+      })
+  }
 
 }
 

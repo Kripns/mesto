@@ -25,19 +25,14 @@ const cardAddingFormValidator = new FormValidator(validationConfig, cardAddingFo
 
 const api = new Api(apiConfig);
 
-api.getDefaultCards().then(data => {
-  const cardList = new Section({
-    items: data,
-    renderer:
-    cardData => cardList.addItem(createCard(cardData.link, cardData.name))
-    }, '.places');
+const cardList = new Section(
+  cardData => cardList.addItem(createCard(cardData.link, cardData.name)), '.places');
 
-    cardList.renderItems();
-}).catch(err => console.log(err));
 
-api.getUser().then(data => {
-  userInfo.setUserInfo(data);
-}).catch(err => console.log(err));
+api.getUser().then(data => {userInfo.setUserInfo(data)}).catch(err => console.log(err));
+
+api.getDefaultCards().then(data => {cardList.renderItems(data)}).catch(err => console.log(err));
+
 
 
 const imagePopup = new PopupWithImage({
@@ -60,8 +55,6 @@ const userInfo = new UserInfo({
 });
 
 
-// api.getUserInfo().then(data => console.log(data))
-
 //ФУНКЦИИ
 
 //Фн создания карточки
@@ -80,10 +73,13 @@ function handleCardClick({ link: link, name: name }) {
 
 //Фн сабмит формы создания карточки
 function submitCardAddingForm(inputValues) {
-  const newCard = {};
-  newCard.name = inputValues['place-name'];
-  newCard.link = inputValues['picture-link'];
-  cardList.addItem(createCard(newCard.link, newCard.name));
+  debugger;
+  api.saveCard(inputValues)
+  .then(data => cardList.addItem(createCard(data.link, data.name)))
+  // const newCard = {};
+  // newCard.name = inputValues['place-name'];
+  // newCard.link = inputValues['picture-link'];
+  // cardList.addItem(createCard(newCard.link, newCard.name));
   cardAddingPopup.close();
 };
 
@@ -100,10 +96,6 @@ function submitCardAddingForm(inputValues) {
   profilePopup.close();
 };
 
-
-
-//Рендерим дефолтные карточки
-// cardList.renderItems();
 
 //Слушатели попапов
 imagePopup.setEventListeners();
