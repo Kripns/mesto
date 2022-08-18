@@ -17,6 +17,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import apiConfig from '../utils/apiConfig.js';
+// import { data } from 'autoprefixer';
 
 
 //Экземпляры классов
@@ -25,8 +26,9 @@ const cardAddingFormValidator = new FormValidator(validationConfig, cardAddingFo
 
 const api = new Api(apiConfig);
 
+
 const cardList = new Section(
-  cardData => cardList.addItem(createCard(cardData.link, cardData.name)), '.places');
+  cardData => cardList.addItem(createCard(cardData)), '.places');
 
 
 api.getUser().then(data => {userInfo.setUserInfo(data)}).catch(err => console.log(err));
@@ -58,10 +60,10 @@ const userInfo = new UserInfo({
 //ФУНКЦИИ
 
 //Фн создания карточки
-function createCard(link, name) {
-  const card = new Card(link, name, '.place-card-template', () => {
-    handleCardClick({ link: link, name: name });
-  })
+function createCard(cardData) {
+  const card = new Card(cardData, '.place-card-template', () => {
+    handleCardClick(cardData);
+  }, api)
   const cardElement = card.generateCard();
   return cardElement;
 };
@@ -73,29 +75,28 @@ function handleCardClick({ link: link, name: name }) {
 
 //Фн сабмит формы создания карточки
 function submitCardAddingForm(inputValues) {
-  debugger;
   api.saveCard(inputValues)
-  .then(data => cardList.addItem(createCard(data.link, data.name)))
-  // const newCard = {};
-  // newCard.name = inputValues['place-name'];
-  // newCard.link = inputValues['picture-link'];
-  // cardList.addItem(createCard(newCard.link, newCard.name));
+  .then(data => cardList.addItem(createCard(data)))
+  .catch(err => console.log(err));
   cardAddingPopup.close();
 };
 
 //Фн сабмит формы редактирования профиля
  function submitProfileForm(inputValues) {
   api.editProfile(inputValues)
-  .then(data => {
-    userInfo.setUserInfo({
-      name: data.name,
-      about: data.about
-    })
-  }).catch(err => console.log(err))
+  .then(data => userInfo.setUserInfo({ name: data.name, about: data.about }))
+  .catch(err => console.log(err))
 
   profilePopup.close();
 };
 
+// function isLiked(id) {
+//   return api.getLike(id).then(res => {
+//     return res.likes.some(user => user._id === "4f4cf416006cc29a431a5c97")
+//   })
+// }
+
+// console.log(isLiked("62fe4afeda0eb70d9f99f4f7"))
 
 //Слушатели попапов
 imagePopup.setEventListeners();
