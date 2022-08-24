@@ -95,34 +95,40 @@ function handleCardDelete(cardId, element) {
 
 //Фн создания карточки
 function createCard(cardData) {
+  cardData.currentUser = currentUser;
   const card = new Card(cardData, '.place-card-template', {
     handleCardClick: handleCardClick,
     handleCardDelete: handleCardDelete,
     handleLike: handleLike,
     handleDislike: handleDislike,
-    isLiked: isLiked
+    // isLiked: isLiked
   }
   // () => {
   //   handleCardClick(cardData);
   // }, api, handleCardDelete, () => isOwner(cardData)
   )
   const cardElement = card.generateCard();
+  // card.setInitialLikes()
   return cardElement;
 };
 
-function isLiked(cardData) {
-    currentUser
-    .then(currentUserData => {
-      return cardData.likes.some(user => currentUserData._id === user._id)
-    })
-    // .catch(err => console.log(err))
-}
+// function isLiked(cardData) {
+//   Promise.all([currentUser, cardData])
+//     // currentUser
+//     .then(([currentUserData, currentCard]) => {
+//       return currentCard.likes.some(user => {
+//         console.log(currentUserData._id === user._id);
+//         return currentUserData._id === user._id
+//       })
+//     })
+//     // .catch(err => console.log(err))
+// }
 
 function handleLike(cardData, likeCallback) {
   api.setLike(cardData._id)
     .then(updatedCard => {
       likeCallback(updatedCard)
-      cardData = updatedCard;
+      // cardData = updatedCard;
     })
     .catch(err => console.log(err))
 }
@@ -131,7 +137,7 @@ function handleDislike(cardData, dislikeCallback) {
   api.deleteLike(cardData._id)
     .then(updatedCard => {
       dislikeCallback(updatedCard)
-      cardData = updatedCard;
+      // cardData = updatedCard;
     })
     .catch(err => console.log(err));
 }

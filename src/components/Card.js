@@ -10,7 +10,7 @@ export default class Card {
     // this._ownerId = this._data.owner._id;
     this._likes = this._data.likes;
     this._handleCardClick = this._handlers.handleCardClick;
-    this._isLiked = this._handlers.isLiked;
+    // this._isLiked = this._handlers.isLiked;
     this._handleLike = this._handlers.handleLike;
     this._handleDislike = this._handlers.handleDislike;
     this._handleCardDelete = this._handlers.handleCardDelete;
@@ -44,11 +44,12 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._likesCounter.textContent = this._likes.length;
-    this._element.id = this._cardId;
-
-    if(this._isLiked(this._data)) {
-      console.log(this._isLiked(this._data))
-      this._likeIcon.classList.add('place-card__like_active')}
+    // this._element.id = this._cardId;
+    // debugger;
+    // if(this._isLiked()) {
+    //   this._likeIcon.classList.add('place-card__like_active')}
+    //   console.log(this._isLiked())
+    this._setInitialLikes()
     this._setEventListeners();
 
     // if(!this._isOwner(this._ownerId)) {
@@ -57,6 +58,21 @@ export default class Card {
 
     return this._element;
   };
+
+  _setInitialLikes() {
+    return this._data.currentUser
+    .then(currUser => this._likes.some(likedUser => likedUser._id === currUser._id))
+    .then(res => {
+      if(res) {this._likeIcon.classList.add('place-card__like_active')}
+    })
+  }
+
+  // setInitialLikes() {
+  //   return Promise.all([this._data.currentUser, this._data])
+  //   .then(([currUser, card]) => card.likes.some(likedUser => likedUser._id === currUser._id))
+  //   .then(res => {
+  //     if(res) {this._likeIcon.classList.add('place-card__like_active')}})
+  // }
 
 //Устанавливаем обработчики лайка,
 //корзинки и открытия попапа с картинкой
@@ -80,7 +96,7 @@ export default class Card {
 
 //Переключаем кнопку лайк
   _toggleLike() {
-    if(this._isLiked(this._data)) {
+    if(this._likeIcon.classList.contains('place-card__like_active')) {
       this._handleDislike(this._data, updatedCard => {
         this._likeIcon.classList.remove('place-card__like_active');
         this._updateLikes(updatedCard);
