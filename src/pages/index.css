@@ -30,7 +30,7 @@
 @import url(../blocks/place-card/__like/_active/place-card__like_active.css);
 @import url(../blocks/place-card/__like-counter/place-card__like-counter.css);
 @import url(../blocks/place-card/__remove-icon/place-card__remove-icon.css);
-
+@import url(../blocks/place-card/__remove-icon/_hidden/place-card__remove-icon_hidden.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
 

@@ -9,7 +9,7 @@ class Api {
     return Promise.reject(`Ошибка: ${res.status}`)
   }
 
-   getDefaultCards() {
+   getCards() {
     return fetch(`${this._url}/cards`, {
       headers: this._headers
     })
@@ -56,6 +56,15 @@ class Api {
       headers: this._headers,
     })
     .then(res => this._handleResponse(res))
+  }
+
+  deleteCard(cardId) {
+    return fetch(`${this._url}/cards/${cardId}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+    .then(res => this._handleResponse(res))
+
   }
 
 }
