@@ -6,7 +6,7 @@ export default class Card {
     this._handlers = handlers;
     this._link = this._data.link;
     this._name = this._data.name;
-    // this._cardId = this._data._id;
+    this._cardId = this._data._id;
     // this._ownerId = this._data.owner._id;
     this._likes = this._data.likes;
     this._handleCardClick = this._handlers.handleCardClick;
@@ -67,12 +67,6 @@ export default class Card {
     })
   }
 
-  // setInitialLikes() {
-  //   return Promise.all([this._data.currentUser, this._data])
-  //   .then(([currUser, card]) => card.likes.some(likedUser => likedUser._id === currUser._id))
-  //   .then(res => {
-  //     if(res) {this._likeIcon.classList.add('place-card__like_active')}})
-  // }
 
 //Устанавливаем обработчики лайка,
 //корзинки и открытия попапа с картинкой
@@ -90,9 +84,6 @@ export default class Card {
     });
   };
 
-  // _isLiked() {
-  //   return this._likes.some(user => user._id === "4f4cf416006cc29a431a5c97");
-  // }
 
 //Переключаем кнопку лайк
   _toggleLike() {
