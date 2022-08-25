@@ -79,16 +79,15 @@ const deleteCardPopup = new PopupWithConfirmation ('.popup_type_delete', handleD
 deleteCardPopup.setEventListeners();
 
 
-function handleDeletePopupButton(cardId, element) {
-  return api.deleteCard(cardId).then(res => {
-    element.remove();
-    element = null;
+function handleDeletePopupButton(cardId, removeCallback) {
+  return api.deleteCard(cardId).then(() => {
+   removeCallback();
     deleteCardPopup.close();
   }).catch(err => console.log(err))
 }
 
-function handleCardDelete(cardId, element) {
-  deleteCardPopup.open(cardId, element)
+function handleCardDelete(cardId, removeCallback) {
+  deleteCardPopup.open(cardId, removeCallback);
 }
 
 //ФУНКЦИИ
@@ -101,28 +100,11 @@ function createCard(cardData) {
     handleCardDelete: handleCardDelete,
     handleLike: handleLike,
     handleDislike: handleDislike,
-    // isLiked: isLiked
-  }
-  // () => {
-  //   handleCardClick(cardData);
-  // }, api, handleCardDelete, () => isOwner(cardData)
-  )
+  })
   const cardElement = card.generateCard();
-  // card.setInitialLikes()
   return cardElement;
 };
 
-// function isLiked(cardData) {
-//   Promise.all([currentUser, cardData])
-//     // currentUser
-//     .then(([currentUserData, currentCard]) => {
-//       return currentCard.likes.some(user => {
-//         console.log(currentUserData._id === user._id);
-//         return currentUserData._id === user._id
-//       })
-//     })
-//     // .catch(err => console.log(err))
-// }
 
 function handleLike(cardData, likeCallback) {
   api.setLike(cardData._id)

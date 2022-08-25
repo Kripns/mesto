@@ -13,6 +13,7 @@ export default class Card {
     this._handleLike = this._handlers.handleLike;
     this._handleDislike = this._handlers.handleDislike;
     this._handleCardDelete = this._handlers.handleCardDelete;
+    this._removeElement = this._removeElement.bind(this);
   };
 
 //Получааем шаблон карточки
@@ -41,18 +42,10 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
     this._likesCounter.textContent = this._likes.length;
-    // this._element.id = this._cardId;
-    // debugger;
-    // if(this._isLiked()) {
-    //   this._likeIcon.classList.add('place-card__like_active')}
-    //   console.log(this._isLiked())
+
     this._setInitialLikes();
     this._hideRemoveButtons();
     this._setEventListeners();
-
-    // if(!this._isOwner(this._ownerId)) {
-    //   this._removeIcon.classList.add('place-card__remove-icon_hidden')
-    // }
 
     return this._element;
   };
@@ -66,7 +59,7 @@ export default class Card {
     });
 
     this._removeIcon.addEventListener('click', () => {
-      this._handleCardDelete(this._cardId, this._element)
+      this._handleCardDelete(this._cardId, this._removeElement)
     });
 
     this._cardImage.addEventListener('click', () => {
@@ -111,4 +104,10 @@ export default class Card {
     this._likes = updatedCard.likes;
     this._likesCounter.textContent = this._likes.length;
   }
+
+  _removeElement() {
+    this._element.remove();
+    this._element = null;
+  }
+
 };
