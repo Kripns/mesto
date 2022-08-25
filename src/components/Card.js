@@ -7,15 +7,12 @@ export default class Card {
     this._link = this._data.link;
     this._name = this._data.name;
     this._cardId = this._data._id;
-    // this._ownerId = this._data.owner._id;
+    this._ownerId = this._data.owner._id;
     this._likes = this._data.likes;
     this._handleCardClick = this._handlers.handleCardClick;
-    // this._isLiked = this._handlers.isLiked;
     this._handleLike = this._handlers.handleLike;
     this._handleDislike = this._handlers.handleDislike;
     this._handleCardDelete = this._handlers.handleCardDelete;
-    // this._api = api;
-    // this._isOwner = isOwner;
   };
 
 //Получааем шаблон карточки
@@ -49,7 +46,8 @@ export default class Card {
     // if(this._isLiked()) {
     //   this._likeIcon.classList.add('place-card__like_active')}
     //   console.log(this._isLiked())
-    this._setInitialLikes()
+    this._setInitialLikes();
+    this._hideRemoveButtons();
     this._setEventListeners();
 
     // if(!this._isOwner(this._ownerId)) {
@@ -58,14 +56,6 @@ export default class Card {
 
     return this._element;
   };
-
-  _setInitialLikes() {
-    return this._data.currentUser
-    .then(currUser => this._likes.some(likedUser => likedUser._id === currUser._id))
-    .then(res => {
-      if(res) {this._likeIcon.classList.add('place-card__like_active')}
-    })
-  }
 
 
 //Устанавливаем обработчики лайка,
@@ -84,6 +74,22 @@ export default class Card {
     });
   };
 
+
+  _setInitialLikes() {
+    return this._data.currentUser
+      .then(currUser => this._likes.some(likedUser => likedUser._id === currUser._id))
+      .then(res => {
+        if(res) {this._likeIcon.classList.add('place-card__like_active')}
+    })
+  }
+
+  _hideRemoveButtons() {
+    return this._data.currentUser
+      .then(currUser => currUser._id === this._ownerId)
+      .then(res => {
+        if(!res) {this._removeIcon.classList.add('place-card__remove-icon_hidden')}
+      })
+  }
 
 //Переключаем кнопку лайк
   _toggleLike() {
