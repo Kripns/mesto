@@ -35,3 +35,4 @@ export const profileJobInput = document.querySelector('.popup__input_type_job');
 
 //Элементы попапа добавления карточки
 export const cardAddingForm = document.forms['add-card'];
+export const avatarForm = document.forms['update-avatar'];
