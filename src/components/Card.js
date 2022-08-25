@@ -67,7 +67,7 @@ export default class Card {
     });
   };
 
-
+//Закрашиваем сердечки на дефолтных карточках
   _setInitialLikes() {
     return this._data.currentUser
       .then(currUser => this._likes.some(likedUser => likedUser._id === currUser._id))
@@ -76,6 +76,7 @@ export default class Card {
     })
   }
 
+//Прячем корзинки на чужих карточках
   _hideRemoveButtons() {
     return this._data.currentUser
       .then(currUser => currUser._id === this._ownerId)
@@ -84,27 +85,29 @@ export default class Card {
       })
   }
 
-//Переключаем кнопку лайк
+//Переключаем кнопку лайк, обновляем счетчик
   _toggleLike() {
     if(this._likeIcon.classList.contains('place-card__like_active')) {
       this._handleDislike(this._data, updatedCard => {
         this._likeIcon.classList.remove('place-card__like_active');
-        this._updateLikes(updatedCard);
+        this._updateLikesCounter(updatedCard);
       })
     }
     else {
       this._handleLike(this._data, updatedCard => {
         this._likeIcon.classList.add('place-card__like_active')
-        this._updateLikes(updatedCard);
+        this._updateLikesCounter(updatedCard);
       })
     }
   };
 
-  _updateLikes(updatedCard) {
+//Обновляем счетчики лайков
+  _updateLikesCounter(updatedCard) {
     this._likes = updatedCard.likes;
     this._likesCounter.textContent = this._likes.length;
   }
 
+//Удаляем карточку из разметки
   _removeElement() {
     this._element.remove();
     this._element = null;
