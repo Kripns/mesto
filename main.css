@@ -21,7 +21,7 @@
 .place-card__like_active{background:url(08af6fbb37d19d4aa333.svg)}
 .place-card__like-counter{color:#000;font-size:13px;line-height:16px;margin:0;padding-top:3px;text-align:center}
 .place-card__remove-icon{background:url(4af3841e0d351a5225a0.svg);background-size:cover;border:none;cursor:pointer;height:19px;padding:0;position:absolute;right:16px;top:20px;transition:opacity .3s;width:18px}.place-card__remove-icon:hover{opacity:.6}
-.place-card__remove-icon_hidden{visibility:hidden}
+.place-card__remove-icon_hidden{display:none}
 .footer{margin:0 auto;max-width:880px;min-width:320px;width:100%}
 .footer__text{color:#545454;font-size:18px;font-weight:400;line-height:22px;margin:0}@media screen and (max-width:925px){.footer__text{padding-left:19px}}@media screen and (max-width:768px){.footer__text{font-size:14px;line-height:17px}}
 .popup{align-items:center;background:rgba(0,0,0,.5);display:flex;height:100vh;justify-content:center;left:0;opacity:0;position:fixed;top:0;transition:visibility .2s,opacity .4s;visibility:hidden;width:100%}
