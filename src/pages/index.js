@@ -60,21 +60,17 @@ const userInfo = new UserInfo({
 
 //Промисы с данными пользователя и дефолтными карточками
 const currentUser = api.getUser();
-const initalCards = api.getCards();
 
-//Заполняем профиль данными с сервера
-currentUser
-  .then(data => {
-    userInfo.setUserInfo(data);
-    userInfo.setAvatar(data);
-})
+//Заполняем профиль данными с сервера,
+//oтрисовываем дефолтные карточки
+Promise.all([api.getUser(), api.getCards()])
+  .then(values => {
+    userInfo.setUserInfo(values[0]);
+    // userInfo.setAvatar(values[0]);
+    cardList.renderItems(values[1].reverse())
+  })
   .catch(err => console.log(err));
 
-//Отрисовываем дефолтные карточки
-initalCards
-  .then(cardsArray => cardsArray.reverse())
-  .then(reversedArr => cardList.renderItems(reversedArr))
-  .catch(err => console.log(err));
 
 
 //ФУНКЦИИ
@@ -124,30 +120,36 @@ function handleDislike(cardData, dislikeCallback) {
 function submitCardAddingForm(inputValues) {
   cardAddingPopup.handleLoading(true)
   api.saveCard(inputValues)
-    .then(data => cardList.addItem(createCard(data)))
+    .then(data => {
+      cardList.addItem(createCard(data));
+      cardAddingPopup.close();
+    })
     .catch(err => console.log(err))
-    .finally(() => cardAddingPopup.handleLoading(false))
-  cardAddingPopup.close();
+    .finally(() => cardAddingPopup.handleLoading(false));
 };
 
 //Фн сабмит формы редактирования профиля
  function submitProfileForm(inputValues) {
   profilePopup.handleLoading(true)
   api.editProfile(inputValues)
-    .then(data => userInfo.setUserInfo({ name: data.name, about: data.about }))
+    .then(data => {
+      userInfo.setUserInfo(data);
+      profilePopup.close();
+    })
     .catch(err => console.log(err))
     .finally(() => profilePopup.handleLoading(false))
-  profilePopup.close();
 };
 
 //Фн сабмит формы обновления аватара
 function submitAvatarForm(inputValue) {
   avatarPopup.handleLoading(true)
   api.updateAvatar(inputValue)
-    .then(res => userInfo.setAvatar(res))
+    .then(res => {
+      userInfo.setUserInfo(res);
+      avatarPopup.close();
+    })
     .catch(err => console.log(err))
     .finally(() => avatarPopup.handleLoading(false))
-    avatarPopup.close();
 }
 
 //Фн обработчик попапа удаления карточки
@@ -156,7 +158,8 @@ function handleDeletePopupButton(cardId, removeCallback) {
     .then(() => {
       removeCallback();
       deleteCardPopup.close();
-  }).catch(err => console.log(err))
+  })
+    .catch(err => console.log(err))
 }
 
 
@@ -177,8 +180,9 @@ avatarFormValidator.enableValidation();
 //ОБРАБОТЧИКИ
 document.querySelector('.edit-button')
 .addEventListener('click', () => {
-  profileNameInput.value = userInfo.getUserInfo().name;
-  profileJobInput.value = userInfo.getUserInfo().job;
+  const profileData = userInfo.getUserInfo();
+  profileNameInput.value = profileData.name;
+  profileJobInput.value = profileData.job;
   profileFormValidator.resetInputError();
   profilePopup.open();
 });

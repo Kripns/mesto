@@ -19,13 +19,12 @@ export default class UserInfo{
   }
 
 //Метод вставляет данные из инпутов в профиль пользователя
-  setUserInfo({ name, about }) {
+  setUserInfo({ name, about, avatar, _id }) {
     this._name.textContent = name;
     this._job.textContent = about;
-   ;
+    this._avatar.style.backgroundImage = `url(${avatar})`;
+    this._id = _id;
   }
 
-  setAvatar({ avatar }) {
-    this._avatar.style.backgroundImage = `url(${avatar})`
-  }
+
 }
