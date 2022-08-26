@@ -8,6 +8,7 @@ export default class Card {
     this._name = this._data.name;
     this._cardId = this._data._id;
     this._ownerId = this._data.owner._id;
+    this._currentUserId = this._data.currentUser._id;
     this._likes = this._data.likes;
     this._handleCardClick = this._handlers.handleCardClick;
     this._handleLike = this._handlers.handleLike;
@@ -43,13 +44,12 @@ export default class Card {
     this._cardImage.alt = this._name;
     this._likesCounter.textContent = this._likes.length;
 
+    this._setEventListeners();
     this._setInitialLikes();
     this._hideRemoveButtons();
-    this._setEventListeners();
 
     return this._element;
   };
-
 
 //Устанавливаем обработчики лайка,
 //корзинки и открытия попапа с картинкой
@@ -69,26 +69,27 @@ export default class Card {
 
 //Закрашиваем сердечки на дефолтных карточках
   _setInitialLikes() {
-    return this._data.currentUser
-      .then(currUser => this._likes.some(likedUser => likedUser._id === currUser._id))
-      .then(res => {
-        if(res) {this._likeIcon.classList.add('place-card__like_active')}
-    })
+    if(this.isLiked()) {this._likeIcon.classList.add('place-card__like_active')}
+  }
+
+//Проверяем лайки
+  isLiked() {
+    return this._likes.some(likedUser => this._currentUserId === likedUser._id);
   }
 
 //Прячем корзинки на чужих карточках
   _hideRemoveButtons() {
-    return this._data.currentUser
-      .then(currUser => currUser._id === this._ownerId)
-      .then(res => {
-        if(!res) {this._removeIcon.classList.add('place-card__remove-icon_hidden')}
-      })
+    if(!this.isOwner()) {this._removeIcon.classList.add('place-card__remove-icon_hidden')}
+  }
+
+//Проверяем владельца карточки
+  isOwner() {
+    return this._currentUserId === this._ownerId;
   }
 
 //Переключаем кнопку лайк, обновляем счетчик
   _toggleLike() {
-    if(this._likeIcon.classList.contains('place-card__like_active')) {
-      this._handleDislike(this._data, updatedCard => {
+    if(this.isLiked()) {this._handleDislike(this._data, updatedCard => {
         this._likeIcon.classList.remove('place-card__like_active');
         this._updateLikesCounter(updatedCard);
       })
@@ -112,5 +113,4 @@ export default class Card {
     this._element.remove();
     this._element = null;
   }
-
 };

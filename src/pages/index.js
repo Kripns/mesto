@@ -58,31 +58,27 @@ const userInfo = new UserInfo({
   userAvatarSelector: '.profile__avatar'
 });
 
-//Промисы с данными пользователя и дефолтными карточками
-const currentUser = api.getUser();
-
-//Заполняем профиль данными с сервера,
+//Получаем данные пользователя и массив карточек с сервера,
+//заполняем профиль данными,
 //oтрисовываем дефолтные карточки
 Promise.all([api.getUser(), api.getCards()])
   .then(values => {
     userInfo.setUserInfo(values[0]);
-    // userInfo.setAvatar(values[0]);
     cardList.renderItems(values[1].reverse())
   })
   .catch(err => console.log(err));
-
 
 
 //ФУНКЦИИ
 
 //Фн создания карточки
 function createCard(cardData) {
-  cardData.currentUser = currentUser;
+  cardData.currentUser = userInfo.getUserInfo();
   const card = new Card(cardData, '.place-card-template', {
     handleCardClick: handleCardClick,
     handleCardDelete: handleCardDelete,
     handleLike: handleLike,
-    handleDislike: handleDislike,
+    handleDislike: handleDislike
   })
   const cardElement = card.generateCard();
   return cardElement;
